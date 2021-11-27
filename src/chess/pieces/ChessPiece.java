@@ -5,6 +5,17 @@ import chess.Position;
 
 public class ChessPiece {
 
+    enum PieceColor {
+        BLACK,
+        WHITE
+    }
+
+    PieceColor color;
+
+    public ChessPiece(PieceColor color) {
+        this.color = color;
+    }
+
     /**
      * High-level movement. Checks if piece can move the entire path to a selected board position.
      * Unique to the chess piece rules.

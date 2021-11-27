@@ -15,10 +15,102 @@ class ChessPieceTest {
     }
 
     @Nested
+    class BishopTests {
+        // HAPPY PATH
+        @Test
+        void canMoveUpLeftTest() {
+            Position start = new Position(0,7);
+            Position end = new Position(7,0);
+            Bishop bishop = new Bishop(ChessPiece.PieceColor.BLACK);
+
+            Assertions.assertTrue(bishop.canMove(start, end));
+        }
+
+        @Test
+        void canMoveUpRightTest() {
+            Position start = new Position(0,0);
+            Position end = new Position(7,7);
+            Bishop bishop = new Bishop(ChessPiece.PieceColor.BLACK);
+
+            Assertions.assertTrue(bishop.canMove(start, end));
+        }
+
+        @Test
+        void canMoveDownLeftTest() {
+            Position start = new Position(7,7);
+            Position end = new Position(0,0);
+            Bishop bishop = new Bishop(ChessPiece.PieceColor.BLACK);
+
+            Assertions.assertTrue(bishop.canMove(start, end));
+        }
+
+        @Test
+        void canMoveDownRightTest() {
+            Position start = new Position(7,0);
+            Position end = new Position(0,7);
+            Bishop bishop = new Bishop(ChessPiece.PieceColor.BLACK);
+
+            Assertions.assertTrue(bishop.canMove(start, end));
+        }
+
+
+
+        // ALTERNATE PATHS
+        @Test
+        void cannotMoveUpTest() {
+            Position start = new Position(0,0);
+            Position end = new Position(7,0);
+            Bishop bishop = new Bishop(ChessPiece.PieceColor.BLACK);
+
+            Assertions.assertFalse(bishop.canMove(start, end));
+
+        }
+
+        @Test
+        void cannotMoveDownTest() {
+            Position start = new Position(7,0);
+            Position end = new Position(0,0);
+            Bishop bishop = new Bishop(ChessPiece.PieceColor.BLACK);
+
+            Assertions.assertFalse(bishop.canMove(start, end));
+
+        }
+
+        @Test
+        void cannotMoveLeftTest() {
+            Position start = new Position(0,7);
+            Position end = new Position(0,0);
+            Bishop bishop = new Bishop(ChessPiece.PieceColor.BLACK);
+
+            Assertions.assertFalse(bishop.canMove(start, end));
+
+        }
+
+        @Test
+        void cannotMoveRightTest() {
+            Position start = new Position(0,0);
+            Position end = new Position(0,7);
+            Bishop bishop = new Bishop(ChessPiece.PieceColor.BLACK);
+
+            Assertions.assertFalse(bishop.canMove(start, end));
+        }
+
+        @Test
+        void cannotMoveDiagonalJaggedLineTest() {
+            Position start = new Position(0,0);
+            Position end = new Position(3,4);
+            Bishop bishop = new Bishop(ChessPiece.PieceColor.BLACK);
+
+            Assertions.assertFalse(bishop.canMove(start, end));
+        }
+
+    }
+
+    @Nested
     class ChessPieceTests {
         @Test
         void canMoveInBoundsTest() {
-            ChessPiece piece = new ChessPiece();
+            ChessPiece piece = new ChessPiece(ChessPiece.PieceColor.BLACK);
             for(int y = 0; y < ChessBoard.getSizeY(); y++) {
                 for(int x = 0; x < ChessBoard.getSizeX(); x++) {
                     Assertions.assertTrue(piece.canMove(new Position(3,3), new Position(y, x)));
@@ -29,7 +121,7 @@ class ChessPieceTest {
 
         @Test
         void canMoveOutOfBoundsEdgeTest() {
-            ChessPiece piece = new ChessPiece();
+            ChessPiece piece = new ChessPiece(ChessPiece.PieceColor.BLACK);
             int edgeY;
             int edgeX;
 
@@ -62,7 +154,7 @@ class ChessPieceTest {
         void canMoveUpRight1Test() {
             Position start = new Position(3,3);
             Position end = new Position(4,5);
-            Knight knight = new Knight();
+            Knight knight = new Knight(ChessPiece.PieceColor.BLACK);
 
             Assertions.assertTrue(knight.canMove(start, end));
         }
@@ -71,7 +163,7 @@ class ChessPieceTest {
         void canMoveUpRight2Test() {
             Position start = new Position(3,3);
             Position end = new Position(5,4);
-            Knight knight = new Knight();
+            Knight knight = new Knight(ChessPiece.PieceColor.BLACK);
 
             Assertions.assertTrue(knight.canMove(start, end));
 
@@ -81,7 +173,7 @@ class ChessPieceTest {
         void canMoveDownRight1Test() {
             Position start = new Position(3,3);
             Position end = new Position(4,5);
-            Knight knight = new Knight();
+            Knight knight = new Knight(ChessPiece.PieceColor.BLACK);
 
             Assertions.assertTrue(knight.canMove(start, end));
 
@@ -91,7 +183,7 @@ class ChessPieceTest {
         void canMoveDownRight2Test() {
             Position start = new Position(3,3);
             Position end = new Position(4,5);
-            Knight knight = new Knight();
+            Knight knight = new Knight(ChessPiece.PieceColor.BLACK);
 
             Assertions.assertTrue(knight.canMove(start, end));
 
@@ -101,7 +193,7 @@ class ChessPieceTest {
         void canMoveDownLeft1Test() {
             Position start = new Position(3,3);
             Position end = new Position(2,1);
-            Knight knight = new Knight();
+            Knight knight = new Knight(ChessPiece.PieceColor.BLACK);
 
             Assertions.assertTrue(knight.canMove(start, end));
 
@@ -111,7 +203,7 @@ class ChessPieceTest {
         void canMoveDownLeft2Test() {
             Position start = new Position(3,3);
             Position end = new Position(1,2);
-            Knight knight = new Knight();
+            Knight knight = new Knight(ChessPiece.PieceColor.BLACK);
 
             Assertions.assertTrue(knight.canMove(start, end));
 
@@ -121,7 +213,7 @@ class ChessPieceTest {
         void canMoveUpLeft1Test() {
             Position start = new Position(3,3);
             Position end = new Position(4,1);
-            Knight knight = new Knight();
+            Knight knight = new Knight(ChessPiece.PieceColor.BLACK);
 
             Assertions.assertTrue(knight.canMove(start, end));
 
@@ -131,7 +223,7 @@ class ChessPieceTest {
         void canMoveUpLeft2Test() {
             Position start = new Position(3,3);
             Position end = new Position(5,2);
-            Knight knight = new Knight();
+            Knight knight = new Knight(ChessPiece.PieceColor.BLACK);
 
             Assertions.assertTrue(knight.canMove(start, end));
 
@@ -142,7 +234,7 @@ class ChessPieceTest {
         void cannotMove1Test() {
             Position start = new Position(3,3);
             Position end = new Position(3,4);
-            Knight knight = new Knight();
+            Knight knight = new Knight(ChessPiece.PieceColor.BLACK);
 
             Assertions.assertFalse(knight.canMove(start, end));
 
@@ -152,7 +244,7 @@ class ChessPieceTest {
         void cannotMove2Test() {
             Position start = new Position(3,3);
             Position end = new Position(3,5);
-            Knight knight = new Knight();
+            Knight knight = new Knight(ChessPiece.PieceColor.BLACK);
 
             Assertions.assertFalse(knight.canMove(start, end));
 
@@ -162,7 +254,7 @@ class ChessPieceTest {
         void cannotMove3Test() {
             Position start = new Position(3,3);
             Position end = new Position(3,6);
-            Knight knight = new Knight();
+            Knight knight = new Knight(ChessPiece.PieceColor.BLACK);
 
             Assertions.assertFalse(knight.canMove(start, end));
 
@@ -172,7 +264,7 @@ class ChessPieceTest {
         void cannotMoveOutOfBoundsTest() {
             Position start = new Position(3,3);
             Position end = new Position(9,9);
-            Knight knight = new Knight();
+            Knight knight = new Knight(ChessPiece.PieceColor.BLACK);
 
             Assertions.assertFalse(knight.canMove(start, end));
 
@@ -182,7 +274,7 @@ class ChessPieceTest {
         void cannotMoveOutOfBoundsButValidRulesTest() {
             Position start = new Position(7,7);
             Position end = new Position(9,8);
-            Knight knight = new Knight();
+            Knight knight = new Knight(ChessPiece.PieceColor.BLACK);
 
             Assertions.assertFalse(knight.canMove(start, end));
 

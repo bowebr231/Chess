@@ -4,6 +4,10 @@ import chess.Position;
 
 public class Knight extends ChessPiece {
 
+    public Knight(PieceColor color) {
+        super(color);
+    }
+
     /**
      * Determines if the piece can move to the desired position
      * @param start
