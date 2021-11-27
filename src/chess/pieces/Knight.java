@@ -20,28 +20,23 @@ public class Knight extends ChessPiece {
     }
 
     /**
+     * Originally I just check the hard-coded differences for all 6 positions from the starting position.
      *
+     *         Reduced:
+     *         Regions: top-left, top-right, bottom-left, bottom-right.
+     *         The behavior is essentially the same. The core behavior can be captured in a single region,
+     *         and the rest can be reduced by using absolute value functions, I think.
+     *
+     *         If you add the total x and y difference together from the start position it should always equal 3.
+     *         However, x could be 3... So, check that no x or y is zero.
      * @param diff Position end - start
      * @return true if the move is valid according to ChessPiece rules
      */
     private boolean isValidMove(Position diff) {
         boolean isValid = false;
-        if (diff.getY() == -1) {
-            if (diff.getX() == 2 || diff.getX() == -2) {
-                isValid = true;
-            }
-        } else if (diff.getY() == -2) {
-            if (diff.getX() == 1 || diff.getX() == -1) {
-                isValid = true;
-            }
-        } else if (diff.getY() == 1) {
-            if (diff.getX() == 2 || diff.getX() == -2) {
-                isValid = true;
-            }
-        } else if (diff.getY() == 2) {
-            if (diff.getX() == 1 || diff.getX() == -1) {
-                isValid = true;
-            }
+        if (diff.getY() != 0 && diff.getX() != 0
+                && Math.abs(diff.getY()) + Math.abs(diff.getX()) == 3) {
+            isValid = true;
         }
         return isValid;
     }
