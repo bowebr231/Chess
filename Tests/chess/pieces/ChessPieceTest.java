@@ -281,4 +281,57 @@ class ChessPieceTest {
         }
 
     }
+
+    @Nested
+    class RookTests {
+        // HAPPY PATH
+        @Test
+        void canMoveUpTest() {
+            Position start = new Position(0,0);
+            Position end = new Position(7,0);
+            Rook rook = new Rook(ChessPiece.PieceColor.BLACK);
+
+            Assertions.assertTrue(rook.canMove(start, end));
+        }
+
+        @Test
+        void canMoveDownTest() {
+            Position start = new Position(7,0);
+            Position end = new Position(0,0);
+            Rook rook = new Rook(ChessPiece.PieceColor.BLACK);
+
+            Assertions.assertTrue(rook.canMove(start, end));
+        }
+
+        @Test
+        void canMoveLeftTest() {
+            Position start = new Position(0,7);
+            Position end = new Position(0,0);
+            Rook rook = new Rook(ChessPiece.PieceColor.BLACK);
+
+            Assertions.assertTrue(rook.canMove(start, end));
+        }
+
+        @Test
+        void canMoveRightTest() {
+            Position start = new Position(0,0);
+            Position end = new Position(0,7);
+            Rook rook = new Rook(ChessPiece.PieceColor.BLACK);
+
+            Assertions.assertTrue(rook.canMove(start, end));
+        }
+
+
+
+        // ALTERNATE PATHS
+        @Test
+        void cannotMoveDiagonalTest() {
+            Position start = new Position(0,7);
+            Position end = new Position(7,0);
+            Rook rook = new Rook(ChessPiece.PieceColor.BLACK);
+
+            Assertions.assertFalse(rook.canMove(start, end));
+
+        }
+    }
 }
