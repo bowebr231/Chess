@@ -7,12 +7,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-    public static ChessBoard chessBoard;
 
     @Override
     public void init() throws Exception {
         super.init();
-        chessBoard = new ChessBoard();
     }
 
     @Override

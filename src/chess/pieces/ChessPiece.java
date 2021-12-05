@@ -22,11 +22,7 @@ public class ChessPiece {
      * @return
      */
     public boolean canMove(Position start, Position end) {
-        if (ChessBoard.isOutOfBounds(end)) {
-            return false;
-        } else {
-            return true;
-        }
+        return !ChessBoard.isOutOfBounds(end);
     }
 
     public PieceColor getColor() {
@@ -50,12 +46,8 @@ public class ChessPiece {
      * @return
      */
     protected boolean isDiagonalMove(Position diff) {
-        if (diff.getX() != 0 &&
-                Math.abs(diff.getY() / diff.getX()) == 1) {
-            return true;
-        } else {
-            return false;
-        }
+        return diff.getX() != 0 &&
+                Math.abs(diff.getY() / diff.getX()) == 1;
     }
 
     /**
@@ -65,12 +57,8 @@ public class ChessPiece {
      * @return
      */
     protected boolean isAdjacentMove(Position diff) {
-        if (diff.getY() != 0 && diff.getX() == 0 // Same column
-                || diff.getX() != 0 && diff.getY() == 0) { // Same row
-            return true;
-        } else {
-            return false;
-        }
+        return diff.getY() != 0 && diff.getX() == 0 // Same row
+                || diff.getX() != 0 && diff.getY() == 0; // Same column
     }
 
     /*

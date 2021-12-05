@@ -22,11 +22,7 @@ public class Pawn extends ChessPiece {
     public boolean canMove(Position start, Position end) {
         if (isFirstMove) {
             // Determine pawn's sense of direction by checking which end of the board it's on
-            if (start.getY() < ChessBoard.getSizeY() / 2) {
-                directionIsUp = true;
-            } else {
-                directionIsUp = false;
-            }
+            directionIsUp = start.getY() < ChessBoard.getSizeY() / 2;
         }
         return isValidMove(start, end) && super.canMove(start, end);
     }
@@ -39,7 +35,7 @@ public class Pawn extends ChessPiece {
      * @return true if the move is valid according to ChessPiece rules
      */
     private boolean isValidMove(Position start, Position end) {
-        /**
+        /*
          * Cases:
          * 1. Move up one place.
          * 2. Diagonal attack.
@@ -65,26 +61,18 @@ public class Pawn extends ChessPiece {
     }
 
     private boolean didMoveUp(Position diff) {
-        if (diff.getY() >= 1) {
-            return true;
-        } else {
-            return false;
-        }
+        return diff.getY() >= 1;
     }
 
     private boolean isCorrectDirection(Position diff) {
-        if (didMoveUp(diff) == directionIsUp) {
-            return true;
-        } else {
-            return false;
-        }
+        return didMoveUp(diff) == directionIsUp;
     }
 
     @Override
     public boolean moveToPosition(Position start, Position end) {
         boolean moveSuccessful = super.moveToPosition(start, end);
 
-        if (isFirstMove == true && moveSuccessful == true) {
+        if (isFirstMove && moveSuccessful) {
             isFirstMove = false;
         }
         return moveSuccessful;

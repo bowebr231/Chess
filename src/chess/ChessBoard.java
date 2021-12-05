@@ -6,7 +6,7 @@ public class ChessBoard {
 
     private static final int SIZE_Y = 8;
     private static final int SIZE_X = 8;
-    private static ChessPiece[][] chessBoard = new ChessPiece[SIZE_Y][SIZE_X];
+    private static final ChessPiece[][] chessBoard = new ChessPiece[SIZE_Y][SIZE_X];
 
     public ChessBoard() {
         // Create 8x8 empty board for now.
@@ -18,11 +18,8 @@ public class ChessBoard {
     }
 
     public static boolean isOutOfBounds(Position pos) {
-        if (pos.getY() < 0 || pos.getY() >= SIZE_Y || pos.getX() < 0 || pos.getX() >= SIZE_X) {
-            return true;
-        } else {
-            return false;
-        }
+        return pos.getY() < 0 || pos.getY() >= SIZE_Y
+                || pos.getX() < 0 || pos.getX() >= SIZE_X;
     }
 
     public static int getSizeY() {
@@ -46,12 +43,8 @@ public class ChessBoard {
     }
 
     public static boolean isEnemyPiecePresent(Position pos, ChessPiece.PieceColor friendly) {
-        if (getPiece(pos) != null
-                && getPiece(pos).getColor() != friendly) {
-            return true;
-        } else {
-            return false;
-        }
+        return getPiece(pos) != null
+                && getPiece(pos).getColor() != friendly;
     }
 
     public static ChessPiece getPiece(Position pos) {
