@@ -1,5 +1,6 @@
 package chess.pieces;
 
+import chess.ChessBoard;
 import chess.Position;
 
 public class King extends ChessPiece {
@@ -16,7 +17,8 @@ public class King extends ChessPiece {
      */
     @Override
     public boolean canMove(Position start, Position end) {
-        return isValidMove(start.getDifference(end)) && super.canMove(start, end);
+        return isValidMove(start.getDifference(end)) && super.canMove(start, end)
+                && !ChessBoard.isPieceBlockingPath(start, end, color);
     }
 
     /**

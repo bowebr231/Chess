@@ -2,6 +2,9 @@ package chess;
 
 import chess.pieces.ChessPiece;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ChessBoard {
 
     private static final int SIZE_Y = 8;
@@ -45,6 +48,77 @@ public class ChessBoard {
     public static boolean isEnemyPiecePresent(Position pos, ChessPiece.PieceColor friendly) {
         return getPiece(pos) != null
                 && getPiece(pos).getColor() != friendly;
+    }
+
+    /*
+    Alg:
+    Get the numbers needed to check the GameBoard array.
+    1. Start and end positions give you the endpoints of the line (all moves that need checked are lines)
+    2. Use diff as count needed for looping through numbers.
+    3. Loop to get all number indices on path.
+    4. For handling which directions (X or Y)... Abs and then something special for accessing the correct array index.
+     */
+    public static boolean isPieceBlockingPath(Position start, Position end, ChessPiece.PieceColor friendly) {
+        boolean result = false;
+        List<ChessPiece> path = getLine(start, end);
+
+        int count = 0;
+        for (ChessPiece position : path) {
+            if (position != null
+                    && path.size() - 1 != count) {
+                result = true;
+                break;
+            } else if (position != null
+                    && path.size() - 1 == count && position.getColor() == friendly) {
+                result = true;
+                break;
+            }
+            count++;
+        }
+        return result;
+    }
+
+    public static List<ChessPiece> getLine(Position start, Position end) {
+        Position diff = start.getDifference(end);
+        List<ChessPiece> line = new ArrayList();
+
+
+        if (ChessPiece.isAdjacentMove(diff)) {
+            Position incrementInDirection;
+            Math.
+            if (diff.getY() < 0 && diff.getX() == 0) {
+                incrementInDirection = Position.DOWN;
+            } else if (diff.getY() > 0 && diff.getX() == 0) {
+                incrementInDirection = Position.UP;
+            } else if (diff.getY() == 0 && diff.getX() < 0) {
+                incrementInDirection = Position.LEFT;
+            } else {
+                incrementInDirection = Position.RIGHT;
+            }
+
+            // Looping to create Objects caused
+            // Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
+            for (int i = 1; i <= Math.abs(diff.getX()) + Math.abs(diff.getY()); i++) {
+                line.add(ChessBoard.getPiece(start.add(incrementInDirection)));
+            }
+
+        } else if (ChessPiece.isDiagonalMove(diff)) {
+            Position incrementInDirection;
+            if (diff.getY() < 0 && diff.getX() < 0) {
+                incrementInDirection = Position.DOWN_LEFT;
+            } else if (diff.getY() > 0 && diff.getX() < 0) {
+                incrementInDirection = Position.UP_LEFT;
+            } else if (diff.getY() < 0 && diff.getX() > 0) {
+                incrementInDirection = Position.DOWN_RIGHT;
+            } else {
+                incrementInDirection = Position.UP_RIGHT;
+            }
+
+            for (int i = 1; i <= Math.abs(diff.getX()); i++) {
+                line.add(ChessBoard.getPiece(start.add(incrementInDirection)));
+            }
+        }
+        return line;
     }
 
     public static ChessPiece getPiece(Position pos) {

@@ -24,7 +24,8 @@ public class Pawn extends ChessPiece {
             // Determine pawn's sense of direction by checking which end of the board it's on
             directionIsUp = start.getY() < ChessBoard.getSizeY() / 2;
         }
-        return isValidMove(start, end) && super.canMove(start, end);
+        return isValidMove(start, end) && super.canMove(start, end)
+                && !ChessBoard.isPieceBlockingPath(start, end, color);
     }
 
     /**

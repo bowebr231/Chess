@@ -45,7 +45,7 @@ public class ChessPiece {
      * @param diff
      * @return
      */
-    protected boolean isDiagonalMove(Position diff) {
+     public static boolean isDiagonalMove(Position diff) {
         return diff.getX() != 0 &&
                 Math.abs(diff.getY() / diff.getX()) == 1;
     }
@@ -56,7 +56,7 @@ public class ChessPiece {
      * @param diff
      * @return
      */
-    protected boolean isAdjacentMove(Position diff) {
+    public static boolean isAdjacentMove(Position diff) {
         return diff.getY() != 0 && diff.getX() == 0 // Same row
                 || diff.getX() != 0 && diff.getY() == 0; // Same column
     }
