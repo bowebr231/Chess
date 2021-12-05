@@ -7,6 +7,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Not testing Queen or King movements yet since they are basically tested by the other pieces.
+ */
 class ChessPieceTest {
 
     @BeforeEach

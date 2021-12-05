@@ -28,8 +28,7 @@ public class Rook extends ChessPiece {
      */
     private boolean isValidMove(Position diff) {
         boolean isValid = false;
-        if (diff.getY() != 0 && diff.getX() == 0 // Same column
-                || diff.getX() != 0 && diff.getY() == 0) { // Same row
+        if (isAdjacentMove(diff)) {
             isValid = true;
         }
         return isValid;

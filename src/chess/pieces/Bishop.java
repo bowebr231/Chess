@@ -27,8 +27,7 @@ public class Bishop extends ChessPiece {
      */
     private boolean isValidMove(Position diff) {
         boolean isValid = false;
-        if (diff.getX() != 0 &&
-                Math.abs(diff.getY() / diff.getX()) == 1) {
+        if (isDiagonalMove(diff)) {
             isValid = true;
         }
         return isValid;

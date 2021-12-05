@@ -43,6 +43,36 @@ public class ChessPiece {
         return moveSuccessful;
     }
 
+    /**
+     * Since the piece's x and y movement ratio is always the same check by this.
+     * Equation of a line
+     * @param diff
+     * @return
+     */
+    protected boolean isDiagonalMove(Position diff) {
+        if (diff.getX() != 0 &&
+                Math.abs(diff.getY() / diff.getX()) == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Alg Summary:
+     *           If the selected move stays in the same row or column as the starting position.
+     * @param diff
+     * @return
+     */
+    protected boolean isAdjacentMove(Position diff) {
+        if (diff.getY() != 0 && diff.getX() == 0 // Same column
+                || diff.getX() != 0 && diff.getY() == 0) { // Same row
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /*
     PreMove Checks:
     1. Cannot move to destroy a King unless 'Check' has already been declared at the end of a previous move.
