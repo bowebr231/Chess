@@ -81,20 +81,9 @@ public class ChessBoard {
     public static List<ChessPiece> getLine(Position start, Position end) {
         Position diff = start.getDifference(end);
         List<ChessPiece> line = new ArrayList();
-
+        Position incrementInDirection = Position.getDiffDirection(diff);
 
         if (ChessPiece.isAdjacentMove(diff)) {
-            Position incrementInDirection;
-            Math.
-            if (diff.getY() < 0 && diff.getX() == 0) {
-                incrementInDirection = Position.DOWN;
-            } else if (diff.getY() > 0 && diff.getX() == 0) {
-                incrementInDirection = Position.UP;
-            } else if (diff.getY() == 0 && diff.getX() < 0) {
-                incrementInDirection = Position.LEFT;
-            } else {
-                incrementInDirection = Position.RIGHT;
-            }
 
             // Looping to create Objects caused
             // Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
@@ -103,16 +92,6 @@ public class ChessBoard {
             }
 
         } else if (ChessPiece.isDiagonalMove(diff)) {
-            Position incrementInDirection;
-            if (diff.getY() < 0 && diff.getX() < 0) {
-                incrementInDirection = Position.DOWN_LEFT;
-            } else if (diff.getY() > 0 && diff.getX() < 0) {
-                incrementInDirection = Position.UP_LEFT;
-            } else if (diff.getY() < 0 && diff.getX() > 0) {
-                incrementInDirection = Position.DOWN_RIGHT;
-            } else {
-                incrementInDirection = Position.UP_RIGHT;
-            }
 
             for (int i = 1; i <= Math.abs(diff.getX()); i++) {
                 line.add(ChessBoard.getPiece(start.add(incrementInDirection)));
