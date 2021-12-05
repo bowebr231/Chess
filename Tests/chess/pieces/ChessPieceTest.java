@@ -11,7 +11,7 @@ class ChessPieceTest {
 
     @BeforeEach
     void setUp() {
-        //ChessBoard chessBoard = new ChessBoard();
+        ChessBoard.clearBoard();
     }
 
     @Nested
@@ -104,7 +104,7 @@ class ChessPieceTest {
             Assertions.assertFalse(bishop.canMove(start, end));
         }
 
-    }
+    } // end Bishop Tests
 
     @Nested
     class ChessPieceTests {
@@ -145,7 +145,7 @@ class ChessPieceTest {
                 Assertions.assertFalse(piece.canMove(new Position(3,3), new Position(y, edgeX)));
             }
         }
-    }
+    } // end ChessPiece Tests
 
     @Nested
     class KnightTests {
@@ -280,7 +280,142 @@ class ChessPieceTest {
 
         }
 
-    }
+    } // end Knight Tests
+
+    @Nested
+    class PawnTests {
+        // HAPPY PATH
+        @Test
+        void canMoveUpTest1() {
+            Position start = new Position(0,0);
+            Position end = new Position(1,0);
+            Pawn pawn = new Pawn(ChessPiece.PieceColor.BLACK);
+
+            Assertions.assertTrue(pawn.canMove(start, end));
+        }
+
+        @Test
+        void canMoveUpTest2() {
+            Position start = new Position(7,0);
+            Position end = new Position(6,0);
+            Pawn pawn = new Pawn(ChessPiece.PieceColor.BLACK);
+
+            Assertions.assertTrue(pawn.canMove(start, end));
+        }
+
+        @Test
+        void canMoveUpTwiceTest1() {
+            Position start = new Position(0,0);
+            Position end = new Position(2,0);
+            Pawn pawn = new Pawn(ChessPiece.PieceColor.BLACK);
+
+            Assertions.assertTrue(pawn.canMove(start, end));
+        }
+
+        @Test
+        void canMoveUpTwiceTest2() {
+            Position start = new Position(7,0);
+            Position end = new Position(5,0);
+            Pawn pawn = new Pawn(ChessPiece.PieceColor.BLACK);
+
+            Assertions.assertTrue(pawn.canMove(start, end));
+        }
+
+        @Test
+        void canAttackDiagonalLeftTest() {
+            Pawn enemy = new Pawn(ChessPiece.PieceColor.WHITE);
+            ChessBoard.putPieceHere(new Position(4,4), enemy);
+
+            Position start = new Position(3,5);
+            Position end = new Position(4,4);
+            Pawn pawn = new Pawn(ChessPiece.PieceColor.BLACK);
+
+            Assertions.assertTrue(pawn.canMove(start, end));
+        }
+
+        @Test
+        void canAttackDiagonalRightTest() {
+            Pawn enemy = new Pawn(ChessPiece.PieceColor.WHITE);
+            ChessBoard.putPieceHere(new Position(4,4), enemy);
+
+            Position start = new Position(3,3);
+            Position end = new Position(4,4);
+            Pawn pawn = new Pawn(ChessPiece.PieceColor.BLACK);
+
+            Assertions.assertTrue(pawn.canMove(start, end));
+        }
+
+        // ALTERNATE PATHS
+        @Test
+        void cannotAttackFriendlyTest() {
+            Pawn friendly = new Pawn(ChessPiece.PieceColor.BLACK);
+            ChessBoard.putPieceHere(new Position(4,4), friendly);
+
+            Position start = new Position(3,3);
+            Position end = new Position(4,4);
+            Pawn pawn = new Pawn(ChessPiece.PieceColor.BLACK);
+
+            Assertions.assertFalse(pawn.canMove(start, end));
+        }
+
+        @Test
+        void cannotMoveTwiceTwiceTest() {
+            Position start = new Position(0,0);
+            Position end = new Position(2,0);
+            Position endEnd = new Position(4,0);
+            Pawn pawn = new Pawn(ChessPiece.PieceColor.BLACK);
+
+            pawn.moveToPosition(start, end);
+            Assertions.assertFalse(pawn.canMove(end, endEnd));
+        }
+
+        @Test
+        void cannotMoveDiagonalTest() {
+            Position start = new Position(0,0);
+            Position end = new Position(1,1);
+            Pawn pawn = new Pawn(ChessPiece.PieceColor.BLACK);
+
+            Assertions.assertFalse(pawn.canMove(start, end));
+        }
+
+        @Test
+        void cannotMoveWrongDirectionTest1() {
+            Position start = new Position(3,0);
+            Position end = new Position(2,0);
+            Pawn pawn = new Pawn(ChessPiece.PieceColor.BLACK);
+
+            Assertions.assertFalse(pawn.canMove(start, end));
+        }
+
+        @Test
+        void cannotMoveWrongDirectionTest2() {
+            Position start = new Position(6,0);
+            Position end = new Position(7,0);
+            Pawn pawn = new Pawn(ChessPiece.PieceColor.BLACK);
+
+            Assertions.assertFalse(pawn.canMove(start, end));
+        }
+
+        @Test
+        void cannotMoveAdjacentTest1() {
+            Position start = new Position(0,0);
+            Position end = new Position(0,1);
+            Pawn pawn = new Pawn(ChessPiece.PieceColor.BLACK);
+
+            Assertions.assertFalse(pawn.canMove(start, end));
+        }
+
+        @Test
+        void cannotMoveAdjacentTest2() {
+            Position start = new Position(0,1);
+            Position end = new Position(0,0);
+            Pawn pawn = new Pawn(ChessPiece.PieceColor.BLACK);
+
+            Assertions.assertFalse(pawn.canMove(start, end));
+        }
+
+
+    } // end Pawn Tests
 
     @Nested
     class RookTests {
@@ -333,5 +468,7 @@ class ChessPieceTest {
             Assertions.assertFalse(rook.canMove(start, end));
 
         }
-    }
-}
+
+    } // end Rook Tests
+
+} // end ChessPieceTest file

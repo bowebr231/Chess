@@ -5,12 +5,12 @@ import chess.Position;
 
 public class ChessPiece {
 
-    enum PieceColor {
+    protected final PieceColor color;
+
+    public enum PieceColor {
         BLACK,
         WHITE
     }
-
-    PieceColor color;
 
     public ChessPiece(PieceColor color) {
         this.color = color;
@@ -27,6 +27,20 @@ public class ChessPiece {
         } else {
             return true;
         }
+    }
+
+    public PieceColor getColor() {
+        return color;
+    }
+
+    public boolean moveToPosition(Position start, Position end) {
+        boolean moveSuccessful = false;
+
+        if (canMove(start, end)) {
+            moveSuccessful = true;
+            ChessBoard.putPieceHere(end, this);
+        }
+        return moveSuccessful;
     }
 
     /*
