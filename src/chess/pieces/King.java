@@ -17,7 +17,8 @@ public class King extends ChessPiece {
      */
     @Override
     public boolean canMove(Position start, Position end) {
-        return isValidMove(start.getDifference(end)) && super.canMove(start, end)
+        return isValidMove(start.getDifference(end))
+                && !ChessBoard.isOutOfBounds(end)
                 && !ChessBoard.isPieceBlockingPath(start, end, color);
     }
 

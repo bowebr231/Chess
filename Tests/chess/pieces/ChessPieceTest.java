@@ -110,47 +110,6 @@ class ChessPieceTest {
     } // end Bishop Tests
 
     @Nested
-    class ChessPieceTests {
-        @Test
-        void canMoveInBoundsTest() {
-            ChessPiece piece = new ChessPiece(ChessPiece.PieceColor.BLACK);
-            for(int y = 0; y < ChessBoard.getSizeY(); y++) {
-                for(int x = 0; x < ChessBoard.getSizeX(); x++) {
-                    Assertions.assertTrue(piece.canMove(new Position(3,3), new Position(y, x)));
-                    // System.out.println("x=" + x + " y=" + y);
-                }
-            }
-        }
-
-        @Test
-        void canMoveOutOfBoundsEdgeTest() {
-            ChessPiece piece = new ChessPiece(ChessPiece.PieceColor.BLACK);
-            int edgeY;
-            int edgeX;
-
-            edgeY = -1;
-            for(int x = 0; x < ChessBoard.getSizeX(); x++) {
-                Assertions.assertFalse(piece.canMove(new Position(3,3), new Position(edgeY, x)));
-            }
-
-            edgeY = 8;
-            for(int x = 0; x < ChessBoard.getSizeX(); x++) {
-                Assertions.assertFalse(piece.canMove(new Position(3,3), new Position(edgeY, x)));
-            }
-
-            edgeX = -1;
-            for(int y = 0; y < ChessBoard.getSizeX(); y++) {
-                Assertions.assertFalse(piece.canMove(new Position(3,3), new Position(y, edgeX)));
-            }
-
-            edgeX = 8;
-            for(int y = 0; y < ChessBoard.getSizeX(); y++) {
-                Assertions.assertFalse(piece.canMove(new Position(3,3), new Position(y, edgeX)));
-            }
-        }
-    } // end ChessPiece Tests
-
-    @Nested
     class KnightTests {
         // HAPPY PATH
         @Test

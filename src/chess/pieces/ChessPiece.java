@@ -3,7 +3,7 @@ package chess.pieces;
 import chess.ChessBoard;
 import chess.Position;
 
-public class ChessPiece {
+abstract public class ChessPiece {
 
     protected final PieceColor color;
 
@@ -21,9 +21,7 @@ public class ChessPiece {
      * Unique to the chess piece rules.
      * @return
      */
-    public boolean canMove(Position start, Position end) {
-        return !ChessBoard.isOutOfBounds(end);
-    }
+    abstract public boolean canMove(Position start, Position end);
 
     public PieceColor getColor() {
         return color;

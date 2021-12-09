@@ -20,6 +20,11 @@ public class Position {
         this.x = x;
     }
 
+    public Position(Position pos) {
+        this.y = pos.getY();
+        this.x = pos.getX();
+    }
+
     public int getX() {
         return x;
     }

@@ -1,5 +1,6 @@
 package chess.pieces;
 
+import chess.ChessBoard;
 import chess.Position;
 
 public class Knight extends ChessPiece {
@@ -16,7 +17,8 @@ public class Knight extends ChessPiece {
      */
     @Override
     public boolean canMove(Position start, Position end) {
-        return isValidMove(start.getDifference(end)) && super.canMove(start, end);
+        return isValidMove(start.getDifference(end))
+                && !ChessBoard.isOutOfBounds(end);
     }
 
     /**
