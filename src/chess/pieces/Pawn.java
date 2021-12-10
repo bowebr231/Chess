@@ -1,6 +1,7 @@
 package chess.pieces;
 
 import chess.ChessBoard;
+import chess.Main;
 import chess.Position;
 
 public class Pawn extends ChessPiece {
@@ -9,6 +10,11 @@ public class Pawn extends ChessPiece {
     private boolean isFirstMove;
     public Pawn(PieceColor color) {
         super(color);
+        if (color == PieceColor.WHITE) {
+            super.image.setImage(Main.WHITE_PAWN_IMAGE);
+        } else {
+            super.image.setImage(Main.BLACK_BISHOP_IMAGE);
+        }
         isFirstMove = true;
     }
 

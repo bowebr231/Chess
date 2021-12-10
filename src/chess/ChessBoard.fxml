@@ -5,12 +5,11 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <BorderPane prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chess.Controller">
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <GridPane fx:id="chessBoard" alignment="center" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <GridPane fx:id="chessBoard" alignment="center" style="-fx-background-color: blue;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <rowConstraints>
                   <RowConstraints minHeight="10.0" prefHeight="100.0" />
                   <RowConstraints minHeight="10.0" prefHeight="100.0" />
@@ -101,16 +100,4 @@
          </children>
       </AnchorPane>
    </center>
-   <top>
-      <StackPane prefHeight="5.0" prefWidth="5.0" BorderPane.alignment="CENTER" />
-   </top>
-   <left>
-      <StackPane prefHeight="5.0" prefWidth="5.0" BorderPane.alignment="CENTER" />
-   </left>
-   <right>
-      <StackPane prefHeight="5.0" prefWidth="5.0" BorderPane.alignment="CENTER" />
-   </right>
-   <bottom>
-      <StackPane prefHeight="5.0" prefWidth="5.0" BorderPane.alignment="CENTER" />
-   </bottom>
 </BorderPane>

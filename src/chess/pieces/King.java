@@ -1,12 +1,18 @@
 package chess.pieces;
 
 import chess.ChessBoard;
+import chess.Main;
 import chess.Position;
 
 public class King extends ChessPiece {
 
     public King(PieceColor color) {
         super(color);
+        if (color == PieceColor.WHITE) {
+            super.image.setImage(Main.WHITE_KING_IMAGE);
+        } else {
+            super.image.setImage(Main.BLACK_KING_IMAGE);
+        }
     }
 
     /**

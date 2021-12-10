@@ -2,10 +2,13 @@ package chess.pieces;
 
 import chess.ChessBoard;
 import chess.Position;
+import javafx.scene.image.ImageView;
 
 abstract public class ChessPiece {
 
     protected final PieceColor color;
+    protected ImageView image;
+
 
     public enum PieceColor {
         BLACK,
@@ -14,6 +17,9 @@ abstract public class ChessPiece {
 
     public ChessPiece(PieceColor color) {
         this.color = color;
+        this.image = new ImageView();
+        image.setFitHeight(70);
+        image.setFitWidth(70);
     }
 
     /**
@@ -25,6 +31,10 @@ abstract public class ChessPiece {
 
     public PieceColor getColor() {
         return color;
+    }
+
+    public ImageView getImage() {
+        return image;
     }
 
     public boolean moveToPosition(Position start, Position end) {
