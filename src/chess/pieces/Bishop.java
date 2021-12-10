@@ -30,7 +30,7 @@ public class Bishop extends ChessPiece {
      */
     private boolean isValidMove(Position diff) {
         boolean isValid = false;
-        if (isDiagonalMove(diff)) {
+        if (ChessBoard.isDiagonalMove(diff)) {
             isValid = true;
         }
         return isValid;

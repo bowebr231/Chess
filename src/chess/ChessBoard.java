@@ -45,6 +45,28 @@ public class ChessBoard {
         return null;
     }
 
+    /**
+     * Since the piece's x and y movement ratio is always the same check by this.
+     * Equation of a line
+     * @param diff
+     * @return
+     */
+    public static boolean isDiagonalMove(Position diff) {
+        return diff.getX() != 0 &&
+                Math.abs(diff.getY() / diff.getX()) == 1;
+    }
+
+    /**
+     * Alg Summary:
+     *           If the selected move stays in the same row or column as the starting position.
+     * @param diff
+     * @return
+     */
+    public static boolean isAdjacentMove(Position diff) {
+        return diff.getY() != 0 && diff.getX() == 0 // Same row
+                || diff.getX() != 0 && diff.getY() == 0; // Same column
+    }
+
     public static boolean isEnemyPiecePresent(Position pos, ChessPiece.PieceColor friendly) {
         return getPiece(pos) != null
                 && getPiece(pos).getColor() != friendly;
@@ -84,9 +106,9 @@ public class ChessBoard {
         Position incrementInDirection = Position.getDiffDirection(diff);
         int distance;
 
-        if (ChessPiece.isAdjacentMove(diff)) {
+        if (isAdjacentMove(diff)) {
             distance = Math.abs(diff.getX()) + Math.abs(diff.getY());
-        } else if (ChessPiece.isDiagonalMove(diff)) {
+        } else if (isDiagonalMove(diff)) {
             distance = Math.abs(diff.getX());
         } else {
             throw new IllegalArgumentException("The requested line is not adjacent or diagonal on the Chess Board");

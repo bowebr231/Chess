@@ -31,7 +31,7 @@ public class Rook extends ChessPiece {
      */
     private boolean isValidMove(Position diff) {
         boolean isValid = false;
-        if (isAdjacentMove(diff)) {
+        if (ChessBoard.isAdjacentMove(diff)) {
             isValid = true;
         }
         return isValid;

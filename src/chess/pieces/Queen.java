@@ -31,7 +31,7 @@ public class Queen extends ChessPiece {
     private boolean isValidMove(Position diff) {
         boolean isValid = false;
         // Works because the two functions below are so thorough. Can't ever be both.
-        if (isDiagonalMove(diff) || isAdjacentMove(diff)) {
+        if (ChessBoard.isDiagonalMove(diff) || ChessBoard.isAdjacentMove(diff)) {
             isValid = true;
         }
         return isValid;
