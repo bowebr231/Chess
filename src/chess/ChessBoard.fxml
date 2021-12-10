@@ -5,95 +5,112 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chess.Controller">
-   <children>
-      <GridPane fx:id="chessBoard" alignment="center" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="100.0" />
-            <RowConstraints minHeight="10.0" prefHeight="100.0" />
-            <RowConstraints minHeight="10.0" prefHeight="100.0" />
-             <RowConstraints minHeight="10.0" prefHeight="100.0" />
-             <RowConstraints minHeight="10.0" prefHeight="100.0" />
-             <RowConstraints minHeight="10.0" prefHeight="100.0" />
-             <RowConstraints minHeight="10.0" prefHeight="100.0" />
-             <RowConstraints minHeight="10.0" prefHeight="100.0" />
-         </rowConstraints>
-         <columnConstraints>
-            <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
-             <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
-             <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
-             <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
-             <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
-             <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
-             <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
-         </columnConstraints>
+
+<BorderPane prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chess.Controller">
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <StackPane style="-fx-background-color: white;" GridPane.columnIndex="6" GridPane.rowIndex="6" />
-            <StackPane style="-fx-background-color: black;" GridPane.rowIndex="7" />
-            <StackPane style="-fx-background-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <StackPane style="-fx-background-color: black;" GridPane.columnIndex="7" />
-            <StackPane style="-fx-background-color: black;" GridPane.columnIndex="6" GridPane.rowIndex="1" />
-            <StackPane style="-fx-background-color: black;" GridPane.columnIndex="5" GridPane.rowIndex="2" />
-            <StackPane style="-fx-background-color: black;" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-            <StackPane style="-fx-background-color: black;" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-            <StackPane style="-fx-background-color: black;" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-            <StackPane style="-fx-background-color: black;" GridPane.columnIndex="7" GridPane.rowIndex="6" />
-            <StackPane style="-fx-background-color: black;" GridPane.columnIndex="5" GridPane.rowIndex="6" />
-            <StackPane style="-fx-background-color: black;" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-            <StackPane style="-fx-background-color: black;" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-            <StackPane style="-fx-background-color: black;" GridPane.columnIndex="5" />
-            <StackPane style="-fx-background-color: black;" GridPane.columnIndex="3" />
-            <StackPane style="-fx-background-color: black;" GridPane.columnIndex="1" />
-            <StackPane style="-fx-background-color: black;" GridPane.rowIndex="3" />
-            <StackPane style="-fx-background-color: black;" GridPane.rowIndex="5" />
-            <StackPane style="-fx-background-color: black;" GridPane.columnIndex="7" GridPane.rowIndex="4" />
-            <StackPane style="-fx-background-color: black;" GridPane.columnIndex="6" GridPane.rowIndex="7" />
-            <StackPane style="-fx-background-color: black;" GridPane.columnIndex="4" GridPane.rowIndex="7" />
-            <StackPane style="-fx-background-color: black;" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-            <StackPane style="-fx-background-color: black;" GridPane.rowIndex="1" />
-            <StackPane style="-fx-background-color: black;" GridPane.columnIndex="4" GridPane.rowIndex="5" />
-            <StackPane style="-fx-background-color: black;" GridPane.columnIndex="6" GridPane.rowIndex="5" />
-            <StackPane style="-fx-background-color: black;" GridPane.columnIndex="5" GridPane.rowIndex="4" />
-            <StackPane style="-fx-background-color: black;" GridPane.columnIndex="6" GridPane.rowIndex="3" />
-            <StackPane style="-fx-background-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <StackPane style="-fx-background-color: black;" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-            <StackPane style="-fx-background-color: black;" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-            <StackPane style="-fx-background-color: black;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <StackPane style="-fx-background-color: black;" GridPane.columnIndex="7" GridPane.rowIndex="2" />
-            <StackPane style="-fx-background-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <StackPane style="-fx-background-color: white;" GridPane.columnIndex="6" GridPane.rowIndex="4" />
-            <StackPane style="-fx-background-color: white;" GridPane.columnIndex="6" GridPane.rowIndex="2" />
-            <StackPane style="-fx-background-color: white;" GridPane.columnIndex="6" />
-            <StackPane style="-fx-background-color: white;" GridPane.columnIndex="5" GridPane.rowIndex="7" />
-            <StackPane style="-fx-background-color: white;" GridPane.columnIndex="5" GridPane.rowIndex="5" />
-            <StackPane style="-fx-background-color: white;" GridPane.columnIndex="5" GridPane.rowIndex="3" />
-            <StackPane style="-fx-background-color: white;" GridPane.columnIndex="5" GridPane.rowIndex="1" />
-            <StackPane style="-fx-background-color: white;" GridPane.columnIndex="4" GridPane.rowIndex="6" />
-            <StackPane style="-fx-background-color: white;" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-            <StackPane style="-fx-background-color: white;" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-            <StackPane style="-fx-background-color: white;" GridPane.columnIndex="4" />
-            <StackPane style="-fx-background-color: white;" GridPane.columnIndex="3" GridPane.rowIndex="7" />
-            <StackPane style="-fx-background-color: white;" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-            <StackPane style="-fx-background-color: white;" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-            <StackPane style="-fx-background-color: white;" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-            <StackPane style="-fx-background-color: white;" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-            <StackPane style="-fx-background-color: white;" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-            <StackPane style="-fx-background-color: white;" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <StackPane style="-fx-background-color: white;" GridPane.columnIndex="2" />
-            <StackPane style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <StackPane style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <StackPane style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <StackPane style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <StackPane style="-fx-background-color: white;" GridPane.rowIndex="6" />
-            <StackPane style="-fx-background-color: white;" GridPane.rowIndex="4" />
-            <StackPane style="-fx-background-color: white;" GridPane.rowIndex="2" />
-            <StackPane style="-fx-background-color: white;" GridPane.columnIndex="7" GridPane.rowIndex="5" />
-            <StackPane style="-fx-background-color: white;" GridPane.columnIndex="7" GridPane.rowIndex="3" />
-            <StackPane style="-fx-background-color: white;" GridPane.columnIndex="7" GridPane.rowIndex="1" />
-            <StackPane style="-fx-background-color: white;" GridPane.columnIndex="7" GridPane.rowIndex="7" />
-            <StackPane style="-fx-background-color: white;" />
+            <GridPane fx:id="chessBoard" alignment="center" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="100.0" />
+                  <RowConstraints minHeight="10.0" prefHeight="100.0" />
+                  <RowConstraints minHeight="10.0" prefHeight="100.0" />
+                   <RowConstraints minHeight="10.0" prefHeight="100.0" />
+                   <RowConstraints minHeight="10.0" prefHeight="100.0" />
+                   <RowConstraints minHeight="10.0" prefHeight="100.0" />
+                   <RowConstraints minHeight="10.0" prefHeight="100.0" />
+                   <RowConstraints minHeight="10.0" prefHeight="100.0" />
+               </rowConstraints>
+               <columnConstraints>
+                  <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+                   <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+                   <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+                   <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+                   <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+                   <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+                   <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <children>
+                  <StackPane style="-fx-background-color: white;" GridPane.columnIndex="6" GridPane.rowIndex="6" />
+                  <StackPane style="-fx-background-color: black;" GridPane.rowIndex="7" />
+                  <StackPane style="-fx-background-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <StackPane style="-fx-background-color: black;" GridPane.columnIndex="7" />
+                  <StackPane style="-fx-background-color: black;" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+                  <StackPane style="-fx-background-color: black;" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+                  <StackPane style="-fx-background-color: black;" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                  <StackPane style="-fx-background-color: black;" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                  <StackPane style="-fx-background-color: black;" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                  <StackPane style="-fx-background-color: black;" GridPane.columnIndex="7" GridPane.rowIndex="6" />
+                  <StackPane style="-fx-background-color: black;" GridPane.columnIndex="5" GridPane.rowIndex="6" />
+                  <StackPane style="-fx-background-color: black;" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+                  <StackPane style="-fx-background-color: black;" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <StackPane style="-fx-background-color: black;" GridPane.columnIndex="5" />
+                  <StackPane style="-fx-background-color: black;" GridPane.columnIndex="3" />
+                  <StackPane style="-fx-background-color: black;" GridPane.columnIndex="1" />
+                  <StackPane style="-fx-background-color: black;" GridPane.rowIndex="3" />
+                  <StackPane style="-fx-background-color: black;" GridPane.rowIndex="5" />
+                  <StackPane style="-fx-background-color: black;" GridPane.columnIndex="7" GridPane.rowIndex="4" />
+                  <StackPane style="-fx-background-color: black;" GridPane.columnIndex="6" GridPane.rowIndex="7" />
+                  <StackPane style="-fx-background-color: black;" GridPane.columnIndex="4" GridPane.rowIndex="7" />
+                  <StackPane style="-fx-background-color: black;" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+                  <StackPane style="-fx-background-color: black;" GridPane.rowIndex="1" />
+                  <StackPane style="-fx-background-color: black;" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+                  <StackPane style="-fx-background-color: black;" GridPane.columnIndex="6" GridPane.rowIndex="5" />
+                  <StackPane style="-fx-background-color: black;" GridPane.columnIndex="5" GridPane.rowIndex="4" />
+                  <StackPane style="-fx-background-color: black;" GridPane.columnIndex="6" GridPane.rowIndex="3" />
+                  <StackPane style="-fx-background-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <StackPane style="-fx-background-color: black;" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                  <StackPane style="-fx-background-color: black;" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                  <StackPane style="-fx-background-color: black;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <StackPane style="-fx-background-color: black;" GridPane.columnIndex="7" GridPane.rowIndex="2" />
+                  <StackPane style="-fx-background-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <StackPane style="-fx-background-color: white;" GridPane.columnIndex="6" GridPane.rowIndex="4" />
+                  <StackPane style="-fx-background-color: white;" GridPane.columnIndex="6" GridPane.rowIndex="2" />
+                  <StackPane style="-fx-background-color: white;" GridPane.columnIndex="6" />
+                  <StackPane style="-fx-background-color: white;" GridPane.columnIndex="5" GridPane.rowIndex="7" />
+                  <StackPane style="-fx-background-color: white;" GridPane.columnIndex="5" GridPane.rowIndex="5" />
+                  <StackPane style="-fx-background-color: white;" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+                  <StackPane style="-fx-background-color: white;" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                  <StackPane style="-fx-background-color: white;" GridPane.columnIndex="4" GridPane.rowIndex="6" />
+                  <StackPane style="-fx-background-color: white;" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+                  <StackPane style="-fx-background-color: white;" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                  <StackPane style="-fx-background-color: white;" GridPane.columnIndex="4" />
+                  <StackPane style="-fx-background-color: white;" GridPane.columnIndex="3" GridPane.rowIndex="7" />
+                  <StackPane style="-fx-background-color: white;" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                  <StackPane style="-fx-background-color: white;" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                  <StackPane style="-fx-background-color: white;" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <StackPane style="-fx-background-color: white;" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                  <StackPane style="-fx-background-color: white;" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                  <StackPane style="-fx-background-color: white;" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <StackPane style="-fx-background-color: white;" GridPane.columnIndex="2" />
+                  <StackPane style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <StackPane style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <StackPane style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <StackPane style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <StackPane style="-fx-background-color: white;" GridPane.rowIndex="6" />
+                  <StackPane style="-fx-background-color: white;" GridPane.rowIndex="4" />
+                  <StackPane style="-fx-background-color: white;" GridPane.rowIndex="2" />
+                  <StackPane style="-fx-background-color: white;" GridPane.columnIndex="7" GridPane.rowIndex="5" />
+                  <StackPane style="-fx-background-color: white;" GridPane.columnIndex="7" GridPane.rowIndex="3" />
+                  <StackPane style="-fx-background-color: white;" GridPane.columnIndex="7" GridPane.rowIndex="1" />
+                  <StackPane style="-fx-background-color: white;" GridPane.columnIndex="7" GridPane.rowIndex="7" />
+                  <StackPane style="-fx-background-color: white;" />
+               </children>
+            </GridPane>
          </children>
-      </GridPane>
-   </children>
-</AnchorPane>
+      </AnchorPane>
+   </center>
+   <top>
+      <StackPane prefHeight="5.0" prefWidth="5.0" BorderPane.alignment="CENTER" />
+   </top>
+   <left>
+      <StackPane prefHeight="5.0" prefWidth="5.0" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <StackPane prefHeight="5.0" prefWidth="5.0" BorderPane.alignment="CENTER" />
+   </right>
+   <bottom>
+      <StackPane prefHeight="5.0" prefWidth="5.0" BorderPane.alignment="CENTER" />
+   </bottom>
+</BorderPane>
