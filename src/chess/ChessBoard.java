@@ -62,18 +62,18 @@ public class ChessBoard {
         boolean result = false;
         List<ChessPiece> path = getLine(start, end);
 
-        int count = 0;
-        for (ChessPiece position : path) {
-            if (position != null
-                    && path.size() - 1 != count) {
-                result = true;
-                break;
-            } else if (position != null
-                    && path.size() - 1 == count && position.getColor() == friendly) {
+
+        final int destination = path.size() - 1;
+        int position = 0;
+        for (ChessPiece piece : path) {
+            // Doesn't care whether piece is friend or foe unless on the last square.
+            // If not friendly then it doesn't count as a block.
+            if (piece != null &&
+                    (position != destination || piece.getColor() == friendly)) {
                 result = true;
                 break;
             }
-            count++;
+            position++;
         }
         return result;
     }
@@ -82,20 +82,21 @@ public class ChessBoard {
         Position diff = start.getDifference(end);
         List<ChessPiece> line = new ArrayList();
         Position incrementInDirection = Position.getDiffDirection(diff);
+        int distance;
 
         if (ChessPiece.isAdjacentMove(diff)) {
-
-            // Looping to create Objects caused
-            // Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
-            for (int i = 1; i <= Math.abs(diff.getX()) + Math.abs(diff.getY()); i++) {
-                line.add(ChessBoard.getPiece(start.add(incrementInDirection)));
-            }
-
+            distance = Math.abs(diff.getX()) + Math.abs(diff.getY());
         } else if (ChessPiece.isDiagonalMove(diff)) {
+            distance = Math.abs(diff.getX());
+        } else {
+            throw new IllegalArgumentException("The requested line is not adjacent or diagonal on the Chess Board");
+        }
 
-            for (int i = 1; i <= Math.abs(diff.getX()); i++) {
-                line.add(ChessBoard.getPiece(start.add(incrementInDirection)));
-            }
+        // Starts at the next position since you don't count start
+        Position temp = new Position(start);
+        for (int i = 1; i <= distance; i++) {
+            temp = temp.add(incrementInDirection);
+            line.add(ChessBoard.getPiece(temp));
         }
         return line;
     }

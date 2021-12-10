@@ -1,5 +1,6 @@
 package chess;
 
+import chess.pieces.Bishop;
 import chess.pieces.ChessPiece;
 import chess.pieces.Queen;
 import chess.pieces.Rook;
@@ -86,6 +87,8 @@ class ChessBoardTest {
             ChessBoard.putPieceHere(new Position(3, 0), new Rook(ChessPiece.PieceColor.BLACK));
 
             Assertions.assertFalse(rook.canMove(new Position(0,0), new Position(7, 0)));
+
+            Assertions.assertTrue(rook.canMove(new Position(0,0), new Position(0, 7)));
         }
 
         @Test
@@ -116,31 +119,176 @@ class ChessBoardTest {
         }
     }
 
-    @Test
-    void getLine() {
-        ArrayList<ChessPiece> expectedLine = new ArrayList<>();
+    @Nested
+    class GetLineTests {
+        @Test
+        void getUpwardVerticalLine() {
+            ArrayList<ChessPiece> expectedLine = new ArrayList<>();
 
-        Position rookPos = new Position(1, 3);
-        Position queenPos = new Position(3, 3);
-        expectedLine.add(new Rook(ChessPiece.PieceColor.WHITE));
-        expectedLine.add(new Queen(ChessPiece.PieceColor.BLACK));
-        ChessBoard.putPieceHere(queenPos, expectedLine.get(1));
-        ChessBoard.putPieceHere(rookPos, expectedLine.get(0));
+            Position start = new Position(0, 3);
+            Position end = new Position(7, 3);
+            Position rookPos = new Position(1, 3);
+            Position queenPos = new Position(3, 3);
 
-        Position start = new Position(0, 3);
-        Position end = new Position(7, 3);
-        List<ChessPiece> actualLine = ChessBoard.getLine(start, end);
+            // Skips start position
+            expectedLine.add(new Rook(ChessPiece.PieceColor.WHITE));
+            expectedLine.add(null);
+            expectedLine.add(new Queen(ChessPiece.PieceColor.BLACK));
+            expectedLine.add(null);
+            expectedLine.add(null);
+            expectedLine.add(null);
+            expectedLine.add(null);
 
-        assertSame(actualLine.get(1).getColor(), ChessPiece.PieceColor.WHITE);
-        assertSame(actualLine.get(3).getColor(), ChessPiece.PieceColor.BLACK);
+            assertTrue(ChessBoard.putPieceHere(rookPos, expectedLine.get(0)));
+            assertTrue(ChessBoard.putPieceHere(queenPos, expectedLine.get(2)));
 
-        assertNull(actualLine.get(0));
-        assertNull(actualLine.get(2));
-        assertNull(actualLine.get(4));
-        assertNull(actualLine.get(5));
-        assertNull(actualLine.get(6));
-        assertNull(actualLine.get(7));
+            List<ChessPiece> actualLine = ChessBoard.getLine(start, end);
+            System.out.println("Expected length="+expectedLine.size());
+            System.out.println("Actual length="+actualLine.size());
 
+            for (int i = 0; i < 7; i++) {
+                System.out.println("Count="+i);
+                assertSame(actualLine.get(i), expectedLine.get(i));
+            }
+        }
+
+        @Test
+        void getDownwardVerticalLine() {
+            ArrayList<ChessPiece> expectedLine = new ArrayList<>();
+
+            Position start = new Position(7, 3);
+            Position end = new Position(0, 3);
+
+            Queen queen = new Queen(ChessPiece.PieceColor.BLACK);
+            Rook rook = new Rook(ChessPiece.PieceColor.WHITE);
+            Position rookPos = new Position(1, 3);
+            Position queenPos = new Position(3, 3);
+
+            // Skips start position
+            expectedLine.add(null);
+            expectedLine.add(null);
+            expectedLine.add(null);
+            expectedLine.add(queen);
+            expectedLine.add(null);
+            expectedLine.add(rook);
+            expectedLine.add(null);
+
+            assertTrue(ChessBoard.putPieceHere(rookPos, rook));
+            assertTrue(ChessBoard.putPieceHere(queenPos, queen));
+
+            List<ChessPiece> actualLine = ChessBoard.getLine(start, end);
+            System.out.println("Expected length="+expectedLine.size());
+            System.out.println("Actual length="+actualLine.size());
+
+            for (int i = 0; i < 7; i++) {
+                System.out.println("Count="+i);
+                assertSame(actualLine.get(i), expectedLine.get(i));
+            }
+        }
+
+        @Test
+        void getLeftHorizontalLine() {
+            ArrayList<ChessPiece> expectedLine = new ArrayList<>();
+
+            Position start = new Position(3, 7);
+            Position end = new Position(3, 0);
+
+            Queen queen = new Queen(ChessPiece.PieceColor.BLACK);
+            Rook rook = new Rook(ChessPiece.PieceColor.WHITE);
+            Position rookPos = new Position(3, 1);
+            Position queenPos = new Position(3, 3);
+
+            // Skips start position
+            expectedLine.add(null);     // 1
+            expectedLine.add(null);     // 2
+            expectedLine.add(null);     // 3
+            expectedLine.add(queen);    // 4
+            expectedLine.add(null);     // 5
+            expectedLine.add(rook);     // 6
+            expectedLine.add(null);     // 7
+
+            assertTrue(ChessBoard.putPieceHere(rookPos, rook));
+            assertTrue(ChessBoard.putPieceHere(queenPos, queen));
+
+            List<ChessPiece> actualLine = ChessBoard.getLine(start, end);
+            System.out.println("Expected length="+expectedLine.size());
+            System.out.println("Actual length="+actualLine.size());
+
+            for (int i = 0; i < 7; i++) {
+                System.out.println("Count="+i);
+                assertSame(actualLine.get(i), expectedLine.get(i));
+            }
+        }
+
+        @Test
+        void getUpRightDiagonalLine() {
+            ArrayList<ChessPiece> expectedLine = new ArrayList<>();
+
+            Position start = new Position(0, 0);
+            Position end = new Position(7, 7);
+
+            Queen queen = new Queen(ChessPiece.PieceColor.BLACK);
+            Rook rook = new Rook(ChessPiece.PieceColor.WHITE);
+            Position rookPos = new Position(4, 4);
+            Position queenPos = new Position(6, 6);
+
+
+            // Skips start position
+            expectedLine.add(null);     // 1
+            expectedLine.add(null);     // 2
+            expectedLine.add(null);     // 3
+            expectedLine.add(rook);     // 4
+            expectedLine.add(null);     // 5
+            expectedLine.add(queen);    // 6
+            expectedLine.add(null);     // 7
+
+            assertTrue(ChessBoard.putPieceHere(rookPos, rook));
+            assertTrue(ChessBoard.putPieceHere(queenPos, queen));
+
+            List<ChessPiece> actualLine = ChessBoard.getLine(start, end);
+            System.out.println("Expected length="+expectedLine.size());
+            System.out.println("Actual length="+actualLine.size());
+
+            for (int i = 0; i < 7; i++) {
+                System.out.println("Count="+i);
+                assertSame(actualLine.get(i), expectedLine.get(i));
+            }
+        }
+
+        @Test
+        void getDownLeftDiagonalLine() {
+            ArrayList<ChessPiece> expectedLine = new ArrayList<>();
+
+            Position start = new Position(7, 7);
+            Position end = new Position(0, 0);
+
+            Queen queen = new Queen(ChessPiece.PieceColor.BLACK);
+            Rook rook = new Rook(ChessPiece.PieceColor.WHITE);
+            Position rookPos = new Position(4, 4);
+            Position queenPos = new Position(6, 6);
+
+
+            // Skips start position
+            expectedLine.add(queen);     // 1
+            expectedLine.add(null);     // 2
+            expectedLine.add(rook);     // 3
+            expectedLine.add(null);     // 4
+            expectedLine.add(null);     // 5
+            expectedLine.add(null);    // 6
+            expectedLine.add(null);     // 7
+
+            assertTrue(ChessBoard.putPieceHere(rookPos, rook));
+            assertTrue(ChessBoard.putPieceHere(queenPos, queen));
+
+            List<ChessPiece> actualLine = ChessBoard.getLine(start, end);
+            System.out.println("Expected length="+expectedLine.size());
+            System.out.println("Actual length="+actualLine.size());
+
+            for (int i = 0; i < 7; i++) {
+                System.out.println("Count="+i);
+                assertSame(actualLine.get(i), expectedLine.get(i));
+            }
+        }
 
     }
 
@@ -162,6 +310,18 @@ class ChessBoardTest {
 
     @Test
     void putPieceHere() {
+        Rook rook = new Rook(ChessPiece.PieceColor.BLACK);
+        Bishop bishop = new Bishop(ChessPiece.PieceColor.BLACK);
+
+        Position pos = new Position(7, 7);
+        assertTrue(ChessBoard.putPieceHere(pos, rook));
+        assertFalse(ChessBoard.putPieceHere(pos, bishop));
+        assertSame(ChessBoard.getPiece(pos), rook);
+
+        Position newPos = new Position(5, 5);
+        assertTrue(ChessBoard.putPieceHere(newPos, rook));
+        assertNull(ChessBoard.getPiece(pos));
+        assertSame(ChessBoard.getPiece(newPos), rook);
     }
 
     @Test
