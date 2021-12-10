@@ -1,19 +1,8 @@
 package chess;
 
 public class Position {
-    int y;
-    int x;
-
-    // Only from one point of view.
-    public static final Position UP = new Position(1, 0);
-    public static final Position DOWN = new Position(-1, 0);
-    public static final Position LEFT = new Position(0, -1);
-    public static final Position RIGHT = new Position(0, 1);
-
-    public static final Position UP_LEFT = new Position(1, -1);
-    public static final Position UP_RIGHT = new Position(1, 1);
-    public static final Position DOWN_LEFT = new Position(-1, -1);
-    public static final Position DOWN_RIGHT = new Position(-1, 1);
+    private final int y;
+    private final int x;
 
     public Position(int y, int x) {
         this.y = y;
