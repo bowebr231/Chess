@@ -13,6 +13,7 @@ public class Rook extends ChessPiece {
         } else {
             super.image.setImage(Main.BLACK_ROOK_IMAGE);
         }
+        super.image.setPiece(this);
     }
 
     /**

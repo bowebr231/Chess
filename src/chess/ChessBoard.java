@@ -33,10 +33,14 @@ public class ChessBoard {
         return SIZE_X;
     }
 
+    public static int getLastYIndex() {
+        return SIZE_Y -1;
+    }
+
     public static Position findPiecePosition(ChessPiece piece) {
         for (int y = 0; y < SIZE_Y; y++) {
             for (int x = 0; x < SIZE_X; x++) {
-                if (chessBoard[y][x] == piece) {
+                if (chessBoard[y][x] != null && chessBoard[y][x] == (piece)) {
                     return new Position(y, x);
                 }
             }

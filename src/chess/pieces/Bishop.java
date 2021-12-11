@@ -13,6 +13,7 @@ public class Bishop extends ChessPiece {
         } else {
             super.image.setImage(Main.BLACK_BISHOP_IMAGE);
         }
+        super.image.setPiece(this);
     }
 
     /**

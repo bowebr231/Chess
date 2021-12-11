@@ -13,6 +13,7 @@ public class Knight extends ChessPiece {
         } else {
             super.image.setImage(Main.BLACK_KNIGHT_IMAGE);
         }
+        super.image.setPiece(this);
     }
 
     /**

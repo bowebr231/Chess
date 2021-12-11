@@ -13,6 +13,7 @@ public class King extends ChessPiece {
         } else {
             super.image.setImage(Main.BLACK_KING_IMAGE);
         }
+        super.image.setPiece(this);
     }
 
     /**

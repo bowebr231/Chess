@@ -1,13 +1,14 @@
 package chess.pieces;
 
 import chess.ChessBoard;
+import chess.ChessPieceView;
 import chess.Position;
 import javafx.scene.image.ImageView;
 
 abstract public class ChessPiece {
 
     protected final PieceColor color;
-    protected ImageView image;
+    protected ChessPieceView image;
 
 
     public enum PieceColor {
@@ -17,7 +18,7 @@ abstract public class ChessPiece {
 
     public ChessPiece(PieceColor color) {
         this.color = color;
-        this.image = new ImageView();
+        this.image = new ChessPieceView();
         image.setFitHeight(70);
         image.setFitWidth(70);
     }
