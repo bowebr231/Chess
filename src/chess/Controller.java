@@ -1,15 +1,15 @@
 package chess;
 
 import chess.pieces.*;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import javax.swing.text.html.ImageView;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
 public class Controller implements Initializable {
 
     @FXML
-    GridPane chessBoard;
+    GridPane boardGridPane;
 
     final StackPane[][] chessBoardView = new StackPane[ChessBoard.getSizeY()][ChessBoard.getSizeX()];
 
@@ -27,7 +27,7 @@ public class Controller implements Initializable {
         // Connect to fxml GridPane squares
         Integer y;
         Integer x;
-        for (Node node : chessBoard.getChildren())
+        for (Node node : boardGridPane.getChildren())
         {
             y = GridPane.getRowIndex(node);
             x = GridPane.getColumnIndex(node);
@@ -45,12 +45,33 @@ public class Controller implements Initializable {
             // System.out.println();
         }
 
+        // Add user 'click' game interface
+        for (y = 0; y < ChessBoard.getSizeY(); y++) {
+            for (x = 0; x < ChessBoard.getSizeX(); x++) {
+                chessBoardView[y][x].addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        StackPane boardSquare = (StackPane) event.getSource();
+
+                        if (boardSquare.getChildren().size() != 0) {
+                            System.out.println("Occupied StackPane was clicked!");
+                        } else {
+                            System.out.println("Empty StackPane was clicked!");
+                        }
+                    }
+                });
+            }
+        }
+
+        // Set Chess Board Pieces
+
+        // White and Black Pawns
         for (x = 0; x < ChessBoard.getSizeY(); x++) {
             setChessBoardViewPosition(new Position(1, x), new Pawn(ChessPiece.PieceColor.WHITE));
             setChessBoardViewPosition(new Position(6, x), new Pawn(ChessPiece.PieceColor.BLACK));
         }
 
-        // White Pieces
+        // Other White Pieces
         setChessBoardViewPosition(new Position(0, 0), new Rook(ChessPiece.PieceColor.WHITE));
         setChessBoardViewPosition(new Position(0, 1), new Knight(ChessPiece.PieceColor.WHITE));
         setChessBoardViewPosition(new Position(0, 2), new Bishop(ChessPiece.PieceColor.WHITE));
@@ -60,7 +81,7 @@ public class Controller implements Initializable {
         setChessBoardViewPosition(new Position(0, 6), new Knight(ChessPiece.PieceColor.WHITE));
         setChessBoardViewPosition(new Position(0, 7), new Rook(ChessPiece.PieceColor.WHITE));
 
-        // Black Pieces
+        // Other Black Pieces
         setChessBoardViewPosition(new Position(7, 0), new Rook(ChessPiece.PieceColor.BLACK));
         setChessBoardViewPosition(new Position(7, 1), new Knight(ChessPiece.PieceColor.BLACK));
         setChessBoardViewPosition(new Position(7, 2), new Bishop(ChessPiece.PieceColor.BLACK));
@@ -78,14 +99,9 @@ public class Controller implements Initializable {
     }
 
     public void setChessBoardViewPosition(Position pos, ChessPiece piece) {
-        chessBoardView[ChessBoard.getSizeY() - 1 - pos.getY()][pos.getX()].getChildren()
-                .clear();
+        int convertedY = ChessBoard.getSizeY() - 1 - pos.getY();
 
-        chessBoardView[ChessBoard.getSizeY() - 1 - pos.getY()][pos.getX()].getChildren()
-                .add(piece.getImage());
-    }
-
-    private void connectBoardView() {
-
+        chessBoardView[convertedY][pos.getX()].getChildren().clear();
+        chessBoardView[convertedY][pos.getX()].getChildren().add(piece.getImage());
     }
 }
