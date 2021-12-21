@@ -11,11 +11,11 @@ public class Pawn extends ChessPiece {
     public Pawn(PieceColor color) {
         super(color);
         if (color == PieceColor.WHITE) {
-            super.image.setImage(Main.WHITE_PAWN_IMAGE);
+            super.chessPieceView.setImage(Main.WHITE_PAWN_IMAGE);
         } else {
-            super.image.setImage(Main.BLACK_BISHOP_IMAGE);
+            super.chessPieceView.setImage(Main.BLACK_PAWN_IMAGE);
         }
-        super.image.setPiece(this);
+        super.chessPieceView.setPiece(this);
         isFirstMove = true;
     }
 

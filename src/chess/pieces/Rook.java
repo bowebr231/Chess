@@ -9,11 +9,11 @@ public class Rook extends ChessPiece {
     public Rook(PieceColor color) {
         super(color);
         if (color == PieceColor.WHITE) {
-            super.image.setImage(Main.WHITE_ROOK_IMAGE);
+            super.chessPieceView.setImage(Main.WHITE_ROOK_IMAGE);
         } else {
-            super.image.setImage(Main.BLACK_ROOK_IMAGE);
+            super.chessPieceView.setImage(Main.BLACK_ROOK_IMAGE);
         }
-        super.image.setPiece(this);
+        super.chessPieceView.setPiece(this);
     }
 
     /**

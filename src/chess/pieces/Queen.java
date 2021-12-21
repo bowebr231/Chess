@@ -9,11 +9,11 @@ public class Queen extends ChessPiece {
     public Queen(PieceColor color) {
         super(color);
         if (color == PieceColor.WHITE) {
-            super.image.setImage(Main.WHITE_QUEEN_IMAGE);
+            super.chessPieceView.setImage(Main.WHITE_QUEEN_IMAGE);
         } else {
-            super.image.setImage(Main.BLACK_QUEEN_IMAGE);
+            super.chessPieceView.setImage(Main.BLACK_QUEEN_IMAGE);
         }
-        super.image.setPiece(this);
+        super.chessPieceView.setPiece(this);
     }
 
     /**

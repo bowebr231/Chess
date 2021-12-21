@@ -9,11 +9,11 @@ public class Bishop extends ChessPiece {
     public Bishop(PieceColor color) {
         super(color);
         if (color == PieceColor.WHITE) {
-            super.image.setImage(Main.WHITE_BISHOP_IMAGE);
+            super.chessPieceView.setImage(Main.WHITE_BISHOP_IMAGE);
         } else {
-            super.image.setImage(Main.BLACK_BISHOP_IMAGE);
+            super.chessPieceView.setImage(Main.BLACK_BISHOP_IMAGE);
         }
-        super.image.setPiece(this);
+        super.chessPieceView.setPiece(this);
     }
 
     /**

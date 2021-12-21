@@ -8,7 +8,7 @@ import javafx.scene.image.ImageView;
 abstract public class ChessPiece {
 
     protected final PieceColor color;
-    protected ChessPieceView image;
+    protected ChessPieceView chessPieceView;
 
 
     public enum PieceColor {
@@ -18,9 +18,9 @@ abstract public class ChessPiece {
 
     public ChessPiece(PieceColor color) {
         this.color = color;
-        this.image = new ChessPieceView();
-        image.setFitHeight(70);
-        image.setFitWidth(70);
+        this.chessPieceView = new ChessPieceView();
+        chessPieceView.setFitHeight(70);
+        chessPieceView.setFitWidth(70);
     }
 
     /**
@@ -34,8 +34,8 @@ abstract public class ChessPiece {
         return color;
     }
 
-    public ImageView getImage() {
-        return image;
+    public ImageView getView() {
+        return chessPieceView;
     }
 
     public boolean moveToPosition(Position start, Position end) {

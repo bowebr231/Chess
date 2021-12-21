@@ -23,33 +23,20 @@ public class Controller implements Initializable {
     private ChessPieceView prevSelectedPiece = null;
     private ChessPiece.PieceColor turnColor = ChessPiece.PieceColor.WHITE;
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         // Connect to fxml GridPane squares
         Integer y;
         Integer x;
-        for (Node node : boardGridPane.getChildren())
+        for (Node square : boardGridPane.getChildren())
         {
-            y = GridPane.getRowIndex(node);
-            x = GridPane.getColumnIndex(node);
-
-            if (y == null) {
-                y = 0;
-            }
-            if (x == null) {
-                x = 0;
-            }
-            int convertedY = (ChessBoard.getLastYIndex()) - y;
-            chessBoardView[convertedY][x] = (StackPane) node;
-
-            // System.out.println("y="+GridPane.getRowIndex(node));
-            // System.out.println("x="+GridPane.getColumnIndex(node));
-            // System.out.println();
+            Position pos = convertPositionViewToModel(square);
+            chessBoardView[pos.getY()][pos.getX()] = (StackPane) square;
         }
 
         // Add user 'click' game interface
+
         /* State Machine:
         1. If square is clicked with a piece on it, and it's that color's turn then piece is 'selected'.
         2. If another square is clicked then check if move is valid. If valid then move the piece there.
@@ -77,20 +64,16 @@ public class Controller implements Initializable {
                         // Try to move a piece
                         if (prevSelectedPiece != null) {
                             // Attempt move
-                            // INSERT CODE
-                            System.out.println("Attempting to move to: "+getChessBoardViewPosition(boardSquare).getY()+", "+getChessBoardViewPosition(boardSquare).getX());
-                            System.out.println("From Position: "+ChessBoard.findPiecePosition(prevSelectedPiece.getPiece()).getY()+", "+ChessBoard.findPiecePosition(prevSelectedPiece.getPiece()).getX());
-
                             System.out.println("Attempting to move to: "+getChessBoardViewPosition(boardSquare).getY()+", "+getChessBoardViewPosition(boardSquare).getX());
                             System.out.println("From Position: "+ChessBoard.findPiecePosition(prevSelectedPiece.getPiece()).getY()+", "+ChessBoard.findPiecePosition(prevSelectedPiece.getPiece()).getX());
                             if (prevSelectedPiece.getPiece().moveToPosition(
                                     ChessBoard.findPiecePosition(prevSelectedPiece.getPiece()),
-                                    getChessBoardViewPosition(boardSquare))
-                            ) {
-                                moveChessBoardViewPosition(ChessBoard.findPiecePosition(prevSelectedPiece.getPiece()),
-                                        prevSelectedPiece);
+                                    getChessBoardViewPosition(boardSquare)))
+                            {
+                                moveChessBoardViewPosition(ChessBoard.findPiecePosition(prevSelectedPiece.getPiece()), prevSelectedPiece);
                                 changeTurnColor();
                                 System.out.println("Piece moved!: "+prevSelectedPiece.getPiece());
+                                updateView();
                             }
                             clearSelection();
                             System.out.println("Selection cleared!");
@@ -108,41 +91,36 @@ public class Controller implements Initializable {
         }
 
         // Set Chess Board Pieces
-        setupBoardPieceModelAndView();
-
-
-        // ImageView piece = new ImageView(new Image(inputStream));
-        // chessBoardView[0][0].getChildren().add(piece);
-
+        setupChessModelAndView();
     }
 
-    private void setupBoardPieceModelAndView() {
+    private void setupChessModelAndView() {
         // VIEWS
         // White and Black Pawns
         for (int x = 0; x < ChessBoard.getSizeY(); x++) {
-            setChessBoardViewPosition(new Position(1, x), new Pawn(ChessPiece.PieceColor.WHITE));
-            setChessBoardViewPosition(new Position(6, x), new Pawn(ChessPiece.PieceColor.BLACK));
+            setPieceViewPosition(new Position(1, x), new Pawn(ChessPiece.PieceColor.WHITE));
+            setPieceViewPosition(new Position(6, x), new Pawn(ChessPiece.PieceColor.BLACK));
         }
 
         // Other White Pieces
-        setChessBoardViewPosition(new Position(0, 0), new Rook(ChessPiece.PieceColor.WHITE));
-        setChessBoardViewPosition(new Position(0, 1), new Knight(ChessPiece.PieceColor.WHITE));
-        setChessBoardViewPosition(new Position(0, 2), new Bishop(ChessPiece.PieceColor.WHITE));
-        setChessBoardViewPosition(new Position(0, 3), new King(ChessPiece.PieceColor.WHITE));
-        setChessBoardViewPosition(new Position(0, 4), new Queen(ChessPiece.PieceColor.WHITE));
-        setChessBoardViewPosition(new Position(0, 5), new Bishop(ChessPiece.PieceColor.WHITE));
-        setChessBoardViewPosition(new Position(0, 6), new Knight(ChessPiece.PieceColor.WHITE));
-        setChessBoardViewPosition(new Position(0, 7), new Rook(ChessPiece.PieceColor.WHITE));
+        setPieceViewPosition(new Position(0, 0), new Rook(ChessPiece.PieceColor.WHITE));
+        setPieceViewPosition(new Position(0, 1), new Knight(ChessPiece.PieceColor.WHITE));
+        setPieceViewPosition(new Position(0, 2), new Bishop(ChessPiece.PieceColor.WHITE));
+        setPieceViewPosition(new Position(0, 3), new King(ChessPiece.PieceColor.WHITE));
+        setPieceViewPosition(new Position(0, 4), new Queen(ChessPiece.PieceColor.WHITE));
+        setPieceViewPosition(new Position(0, 5), new Bishop(ChessPiece.PieceColor.WHITE));
+        setPieceViewPosition(new Position(0, 6), new Knight(ChessPiece.PieceColor.WHITE));
+        setPieceViewPosition(new Position(0, 7), new Rook(ChessPiece.PieceColor.WHITE));
 
         // Other Black Pieces
-        setChessBoardViewPosition(new Position(7, 0), new Rook(ChessPiece.PieceColor.BLACK));
-        setChessBoardViewPosition(new Position(7, 1), new Knight(ChessPiece.PieceColor.BLACK));
-        setChessBoardViewPosition(new Position(7, 2), new Bishop(ChessPiece.PieceColor.BLACK));
-        setChessBoardViewPosition(new Position(7, 4), new Queen(ChessPiece.PieceColor.BLACK));
-        setChessBoardViewPosition(new Position(7, 3), new King(ChessPiece.PieceColor.BLACK));
-        setChessBoardViewPosition(new Position(7, 5), new Bishop(ChessPiece.PieceColor.BLACK));
-        setChessBoardViewPosition(new Position(7, 6), new King(ChessPiece.PieceColor.BLACK));
-        setChessBoardViewPosition(new Position(7, 7), new Rook(ChessPiece.PieceColor.BLACK));
+        setPieceViewPosition(new Position(7, 0), new Rook(ChessPiece.PieceColor.BLACK));
+        setPieceViewPosition(new Position(7, 1), new Knight(ChessPiece.PieceColor.BLACK));
+        setPieceViewPosition(new Position(7, 2), new Bishop(ChessPiece.PieceColor.BLACK));
+        setPieceViewPosition(new Position(7, 4), new Queen(ChessPiece.PieceColor.BLACK));
+        setPieceViewPosition(new Position(7, 3), new King(ChessPiece.PieceColor.BLACK));
+        setPieceViewPosition(new Position(7, 5), new Bishop(ChessPiece.PieceColor.BLACK));
+        setPieceViewPosition(new Position(7, 6), new King(ChessPiece.PieceColor.BLACK));
+        setPieceViewPosition(new Position(7, 7), new Rook(ChessPiece.PieceColor.BLACK));
 
         // MODEL
         for (int y = 0; y < ChessBoard.getSizeY(); y++) {
@@ -154,14 +132,16 @@ public class Controller implements Initializable {
                 ChessBoard.putPieceHere(new Position(y, x), piece);
             }
         }
+    }
 
-//        for (int y = 0; y < ChessBoard.getSizeY(); y++) {
-//            for (int x = 0; x < ChessBoard.getSizeX(); x++) {
-//                if (ChessBoard.getPiece(new Position(y, x)) != null) {
-//                    System.out.println(ChessBoard.getPiece(new Position(y, x)));
-//                }
-//            }
-//        }
+    private void debugPrintView() {
+        for (int y = 0; y < ChessBoard.getSizeY(); y++) {
+            for (int x = 0; x < ChessBoard.getSizeX(); x++) {
+                if (chessBoardView[y][x].getChildren().size() != 0) {
+                    System.out.println(chessBoardView[y][x].getChildren());
+                }
+            }
+        }
     }
 
     private void clearSelection() {
@@ -176,23 +156,24 @@ public class Controller implements Initializable {
         }
     }
 
-    public void setChessBoardViewPosition(Position pos, ChessPiece piece) {
-        // int convertedY = (ChessBoard.getLastYIndex()) - pos.getY();
+    public void setPieceViewPosition(Position pos, ChessPiece piece) {
 
         chessBoardView[pos.getY()][pos.getX()].getChildren().clear();
-        chessBoardView[pos.getY()][pos.getX()].getChildren().add(piece.getImage());
+        chessBoardView[pos.getY()][pos.getX()].getChildren().add(piece.getView());
     }
 
-    public void moveChessBoardViewPosition(Position pos, ChessPieceView view) {
-        // int convertedY = (ChessBoard.getLastYIndex()) - pos.getY();
+    public void moveChessBoardViewPosition(Position pos, ChessPieceView piece) {
 
-        Position prevPos = getChessBoardViewPosition((StackPane) view.getParent());
+        Position prevPos = getChessBoardViewPosition((StackPane) piece.getParent());
         chessBoardView[prevPos.getY()][prevPos.getX()].getChildren().clear();
-        chessBoardView[pos.getY()][pos.getX()].getChildren().add(view);
+        chessBoardView[pos.getY()][pos.getX()].getChildren().add(piece);
     }
 
-    public Position getChessBoardViewPosition(StackPane square){
+    public Position getChessBoardViewPosition(StackPane square) {
+        return convertPositionViewToModel(square);
+    }
 
+    private Position convertPositionViewToModel(Node square) {
         Integer y = GridPane.getRowIndex(square);
         Integer x = GridPane.getColumnIndex(square);
 
@@ -205,31 +186,22 @@ public class Controller implements Initializable {
         }
 
         int convertedY = (ChessBoard.getLastYIndex()) - y;
-        // System.out.println("Y="+y+", x="+x);
-        System.out.println("ConvertedY="+convertedY+", x="+x);
+
         return new Position(convertedY, x);
     }
 
+    public void updateView() {
+        for (int y = 0; y < ChessBoard.getSizeY(); y++) {
+            for (int x = 0; x < ChessBoard.getSizeX(); x++) {
+                Position pos = new Position(y, x);
+                ChessPiece piece = ChessBoard.getPiece(pos);
+                if (piece != null) {
+                    setPieceViewPosition(pos, piece);
+                } else {
+                    chessBoardView[pos.getY()][pos.getX()].getChildren().clear();
+                }
+            }
+        }
+    }
 
-
-//    private boolean isWhitePiece(ImageView view) {
-//        boolean isWhite;
-//        switch (view.getImage().toString()) {
-//            case Main.BLACK_PAWN_IMAGE:
-//            case Main.BLACK_ROOK_IMAGE:
-//            case Main.BLACK_BISHOP_IMAGE:
-//            case Main.BLACK_KNIGHT_IMAGE:
-//            case Main.BLACK_QUEEN_IMAGE:
-//            case Main.BLACK_KING_IMAGE:
-//                isWhite = false;
-//
-//            case Main.WHITE_PAWN_IMAGE:
-//            case Main.WHITE_ROOK_IMAGE:
-//            case Main.WHITE_BISHOP_IMAGE:
-//            case Main.WHITE_KNIGHT_IMAGE:
-//            case Main.WHITE_QUEEN_IMAGE:
-//            case Main.WHITE_KING_IMAGE:
-//                isWhite = true;
-//        }
-//    }
 }

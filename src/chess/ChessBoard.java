@@ -133,8 +133,8 @@ public class ChessBoard {
 
     public static boolean putPieceHere(Position destination, ChessPiece piece) {
         boolean placementSuccessful = false;
-        // Not out of bounds, and current position is not taken
-        if (!isOutOfBounds(destination) && getPiece(destination) == null) {
+        // Not out of bounds
+        if (!isOutOfBounds(destination)) {
 
             Position current = findPiecePosition(piece);
             // Piece was not on the board yet
@@ -153,6 +153,16 @@ public class ChessBoard {
         for (int y = 0; y < SIZE_Y; y++) {
             for (int x = 0; x < SIZE_X; x++) {
                 chessBoard[y][x] = null;
+            }
+        }
+    }
+
+    private void debugPrintModel() {
+        for (int y = 0; y < ChessBoard.getSizeY(); y++) {
+            for (int x = 0; x < ChessBoard.getSizeX(); x++) {
+                if (ChessBoard.getPiece(new Position(y, x)) != null) {
+                    System.out.println(ChessBoard.getPiece(new Position(y, x)));
+                }
             }
         }
     }
