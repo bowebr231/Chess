@@ -29,7 +29,7 @@ public class Pawn extends ChessPiece {
     public boolean canMove(Position start, Position end) {
         if (isFirstMove) {
             // Determine pawn's sense of direction by checking which end of the board it's on
-            directionIsUp = start.getY() < ChessBoard.getSizeY() / 2;
+            directionIsUp = start.getY() < ChessBoard.getSizeY() / 2; // less the 4
         }
         return isValidMove(start, end)
                 && !ChessBoard.isOutOfBounds(end)
@@ -55,9 +55,10 @@ public class Pawn extends ChessPiece {
         Position diff = start.getDifference(end);
 
         if (isCorrectDirection(diff)) {
-            // Move 1 or 2 positions
-            if (Math.abs(diff.getY()) == 1 && Math.abs(diff.getX()) == 0
-                    || Math.abs(diff.getY()) == 2 && Math.abs(diff.getX()) == 0 && isFirstMove) {
+            // Move 1 or 2 positions forward
+            if ((Math.abs(diff.getY()) == 1 && Math.abs(diff.getX()) == 0
+                    || Math.abs(diff.getY()) == 2 && Math.abs(diff.getX()) == 0 && isFirstMove)
+                && !ChessBoard.isEnemyPiecePresent(end, this.color)) {
                 isValid = true;
 
                 // Diagonal attack

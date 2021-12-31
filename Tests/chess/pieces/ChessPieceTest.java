@@ -321,6 +321,19 @@ class ChessPieceTest {
         }
 
         @Test
+        void cannotAttackEnemyInFrontTest() {
+            // Careful starting positions are required so Pawns' direction logic is initialized correctly.
+            Pawn enemy = new Pawn(ChessPiece.PieceColor.WHITE);
+            ChessBoard.putPieceHere(new Position(4,5), enemy);
+
+            Position start = new Position(3,5);
+            Position end = new Position(4,5);
+            Pawn pawn = new Pawn(ChessPiece.PieceColor.BLACK);
+
+            Assertions.assertFalse(pawn.canMove(start, end));
+        }
+
+        @Test
         void cannotMoveTwiceTwiceTest() {
             Position start = new Position(0,0);
             Position end = new Position(2,0);
@@ -341,7 +354,7 @@ class ChessPieceTest {
         }
 
         @Test
-        void cannotMoveWrongDirectionTest1() {
+        void cannotMoveDownTest() {
             Position start = new Position(3,0);
             Position end = new Position(2,0);
             Pawn pawn = new Pawn(ChessPiece.PieceColor.BLACK);
@@ -350,7 +363,7 @@ class ChessPieceTest {
         }
 
         @Test
-        void cannotMoveWrongDirectionTest2() {
+        void cannotMoveUp() {
             Position start = new Position(6,0);
             Position end = new Position(7,0);
             Pawn pawn = new Pawn(ChessPiece.PieceColor.BLACK);
@@ -359,7 +372,7 @@ class ChessPieceTest {
         }
 
         @Test
-        void cannotMoveAdjacentTest1() {
+        void cannotMoveRightTest() {
             Position start = new Position(0,0);
             Position end = new Position(0,1);
             Pawn pawn = new Pawn(ChessPiece.PieceColor.BLACK);
@@ -368,7 +381,7 @@ class ChessPieceTest {
         }
 
         @Test
-        void cannotMoveAdjacentTest2() {
+        void cannotMoveLeftTest() {
             Position start = new Position(0,1);
             Position end = new Position(0,0);
             Pawn pawn = new Pawn(ChessPiece.PieceColor.BLACK);

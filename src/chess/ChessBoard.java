@@ -94,6 +94,7 @@ public class ChessBoard {
         for (ChessPiece piece : path) {
             // Doesn't care whether piece is friend or foe unless on the last square.
             // If not friendly then it doesn't count as a block.
+            // Note: However, for Pawns this should be handled differently since they can't attack in front.
             if (piece != null &&
                     (position != destination || piece.getColor() == friendly)) {
                 result = true;
@@ -136,13 +137,12 @@ public class ChessBoard {
         // Not out of bounds
         if (!isOutOfBounds(destination)) {
 
-            Position current = findPiecePosition(piece);
-            // Piece was not on the board yet
-            if (current == null) {
+            Position prevPosition = findPiecePosition(piece);
+            if (prevPosition == null) { // Piece was not on the board yet
                 chessBoard[destination.getY()][destination.getX()] = piece;
             } else {
-                chessBoard[current.getY()][current.getX()] = null;
-                chessBoard[destination.getY()][destination.getX()] = piece;
+                chessBoard[prevPosition.getY()][prevPosition.getX()] = null;
+                chessBoard[destination.getY()][destination.getX()] = piece; // Removes any piece that it lands on.
             }
             placementSuccessful = true;
         }
