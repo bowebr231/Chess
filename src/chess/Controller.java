@@ -6,8 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,6 +20,8 @@ public class Controller implements Initializable {
     final StackPane[][] chessBoardView = new StackPane[ChessBoard.getSizeY()][ChessBoard.getSizeX()];
 
     private ChessPieceView prevSelectedPiece = null;
+    private StackPane prevSelectedSquare = null;
+    private String prevSelectedSquareColor = null;
     private ChessPiece.PieceColor turnColor = ChessPiece.PieceColor.WHITE;
 
     @Override
@@ -75,13 +76,13 @@ public class Controller implements Initializable {
                                 System.out.println("Piece moved!: "+prevSelectedPiece.getPiece());
                                 updateView();
                             }
-                            clearSelection();
+                            clearSelection(boardSquare);
                             System.out.println("Selection cleared!");
-
                         } else {
-                            // Select valid piece to move
+                            // Select piece if correct turn color
                             if (!squareIsEmpty && selectedPiece.getPiece().getColor() == turnColor) {
                                 prevSelectedPiece = selectedPiece;
+                                setSelectionEffect(boardSquare, true);
                                 System.out.println("New piece selected: "+selectedPiece.getPiece());
                             }
                         }
@@ -92,6 +93,18 @@ public class Controller implements Initializable {
 
         // Set Chess Board Pieces
         setupChessModelAndView();
+    }
+
+    private void setSelectionEffect(StackPane boardSquare, boolean selectTarget) {
+        if (selectTarget) {
+            prevSelectedSquare = boardSquare;
+            prevSelectedSquareColor = boardSquare.getStyle();
+            boardSquare.setStyle("-fx-background-color: LIMEGREEN;");
+        } else {
+            prevSelectedSquare.setStyle(prevSelectedSquareColor);
+            prevSelectedSquare = null;
+            prevSelectedSquareColor = null;
+        }
     }
 
     private void setupChessModelAndView() {
@@ -144,8 +157,10 @@ public class Controller implements Initializable {
         }
     }
 
-    private void clearSelection() {
+    private void clearSelection(StackPane boardSquare) {
         prevSelectedPiece = null;
+        setSelectionEffect(boardSquare, false);
+        System.out.println("Selection cleared!");
     }
 
     private void changeTurnColor() {
