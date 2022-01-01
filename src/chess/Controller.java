@@ -132,7 +132,7 @@ public class Controller implements Initializable {
         setPieceViewPosition(new Position(7, 4), new Queen(ChessPiece.PieceColor.BLACK));
         setPieceViewPosition(new Position(7, 3), new King(ChessPiece.PieceColor.BLACK));
         setPieceViewPosition(new Position(7, 5), new Bishop(ChessPiece.PieceColor.BLACK));
-        setPieceViewPosition(new Position(7, 6), new King(ChessPiece.PieceColor.BLACK));
+        setPieceViewPosition(new Position(7, 6), new Knight(ChessPiece.PieceColor.BLACK));
         setPieceViewPosition(new Position(7, 7), new Rook(ChessPiece.PieceColor.BLACK));
 
         // MODEL

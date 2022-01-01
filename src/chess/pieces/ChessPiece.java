@@ -10,7 +10,6 @@ abstract public class ChessPiece {
     protected final PieceColor color;
     protected ChessPieceView chessPieceView;
 
-
     public enum PieceColor {
         BLACK,
         WHITE
