@@ -22,6 +22,7 @@ public class Controller implements Initializable {
     private ChessPieceView prevSelectedPiece = null;
     private StackPane prevSelectedSquare = null;
     private String prevSelectedSquareColor = null;
+
     private ChessPiece.PieceColor turnColor = ChessPiece.PieceColor.WHITE;
 
     @Override
@@ -64,26 +65,20 @@ public class Controller implements Initializable {
 
                         // Try to move a piece
                         if (prevSelectedPiece != null) {
-                            // Attempt move
-                            System.out.println("Attempting to move to: "+getChessBoardViewPosition(boardSquare).getY()+", "+getChessBoardViewPosition(boardSquare).getX());
-                            System.out.println("From Position: "+ChessBoard.findPiecePosition(prevSelectedPiece.getPiece()).getY()+", "+ChessBoard.findPiecePosition(prevSelectedPiece.getPiece()).getX());
                             if (prevSelectedPiece.getPiece().moveToPosition(
                                     ChessBoard.findPiecePosition(prevSelectedPiece.getPiece()),
                                     getChessBoardViewPosition(boardSquare)))
                             {
                                 moveChessBoardViewPosition(ChessBoard.findPiecePosition(prevSelectedPiece.getPiece()), prevSelectedPiece);
                                 changeTurnColor();
-                                System.out.println("Piece moved!: "+prevSelectedPiece.getPiece());
                                 updateView();
                             }
                             clearSelection(boardSquare);
-                            System.out.println("Selection cleared!");
                         } else {
                             // Select piece if correct turn color
                             if (!squareIsEmpty && selectedPiece.getPiece().getColor() == turnColor) {
                                 prevSelectedPiece = selectedPiece;
                                 setSelectionEffect(boardSquare, true);
-                                System.out.println("New piece selected: "+selectedPiece.getPiece());
                             }
                         }
                     }
@@ -108,7 +103,7 @@ public class Controller implements Initializable {
     }
 
     private void setupChessModelAndView() {
-        // VIEWS
+        // VIEW
         // White and Black Pawns
         for (int x = 0; x < ChessBoard.getSizeY(); x++) {
             setPieceViewPosition(new Position(1, x), new Pawn(ChessPiece.PieceColor.WHITE));
@@ -160,7 +155,6 @@ public class Controller implements Initializable {
     private void clearSelection(StackPane boardSquare) {
         prevSelectedPiece = null;
         setSelectionEffect(boardSquare, false);
-        System.out.println("Selection cleared!");
     }
 
     private void changeTurnColor() {
@@ -171,20 +165,20 @@ public class Controller implements Initializable {
         }
     }
 
-    public void setPieceViewPosition(Position pos, ChessPiece piece) {
+    private void setPieceViewPosition(Position pos, ChessPiece piece) {
 
         chessBoardView[pos.getY()][pos.getX()].getChildren().clear();
         chessBoardView[pos.getY()][pos.getX()].getChildren().add(piece.getView());
     }
 
-    public void moveChessBoardViewPosition(Position pos, ChessPieceView piece) {
+    private void moveChessBoardViewPosition(Position pos, ChessPieceView piece) {
 
         Position prevPos = getChessBoardViewPosition((StackPane) piece.getParent());
         chessBoardView[prevPos.getY()][prevPos.getX()].getChildren().clear();
         chessBoardView[pos.getY()][pos.getX()].getChildren().add(piece);
     }
 
-    public Position getChessBoardViewPosition(StackPane square) {
+    private Position getChessBoardViewPosition(StackPane square) {
         return convertPositionViewToModel(square);
     }
 
@@ -205,7 +199,7 @@ public class Controller implements Initializable {
         return new Position(convertedY, x);
     }
 
-    public void updateView() {
+    private void updateView() {
         for (int y = 0; y < ChessBoard.getSizeY(); y++) {
             for (int x = 0; x < ChessBoard.getSizeX(); x++) {
                 Position pos = new Position(y, x);
