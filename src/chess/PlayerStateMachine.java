@@ -80,6 +80,10 @@ public class PlayerStateMachine {
         
         restoreBoardCopy();
 
+        if (result == false && state == PlayerState.CHECK) {
+            System.out.println(piece.getColor() + " player escaped CHECK!");
+        }
+
         return result;
     }
 
@@ -98,7 +102,7 @@ public class PlayerStateMachine {
     isCheck(), and isCheckMate(). But, then I started to redesign the method names
     by the many operations needed to calculate these states since check and checkmate are so closely bound, I think.
      */
-    public PlayerState updateState() {
+    public PlayerState getUpdatedState() {
 
         if (isCheck()) {
             state = PlayerState.CHECK;
@@ -146,7 +150,8 @@ public class PlayerStateMachine {
                 if (enemy != null
                         && enemy.getColor() != king.getColor()
                         && enemy.canMove(enemyPosition, kingPosition)) {
-
+                    System.out.println("Enemy " + enemy + " can attack "
+                            + king.getColor() + " King from position " + enemyPosition.getY() + enemyPosition.getX());
                     threatPositions.add(enemyPosition);
                 }
             }
@@ -176,7 +181,8 @@ public class PlayerStateMachine {
     private boolean canKingEscape(Position kingPosition) {
         // Basic King moves
         for (Position diff : KING_MOVE_DIFFS) {
-            if (getThreatPositions(kingPosition.add(diff)).size() == 0) {
+            if (king.canMove(kingPosition, kingPosition.add(diff))
+                    && !isMoveCheck(king, kingPosition.add(diff))) {
                 return true;
             }
         }
@@ -223,6 +229,9 @@ public class PlayerStateMachine {
         if (threatPositionList.size() < 2 && !(enemy instanceof Knight)) {
 
             List<Position> threatAttackPath = ChessBoard.getBoardLinePositions(threatPositionList.get(0), kingPosition);
+            // Removes the last position since this will be the king's position. You can't move a friendly here.
+            // NOTE: this doesn't affect end result, but it is my intent of this behavior
+            threatAttackPath = threatAttackPath.subList(0, threatAttackPath.size() - 2);
             // Scan all friendly pieces
             for (int y = 0; y < ChessBoard.getSizeY(); y++) {
                 for (int x = 0; x < ChessBoard.getSizeX(); x++) {
@@ -231,7 +240,9 @@ public class PlayerStateMachine {
                     ChessPiece friendly = ChessBoard.getPiece(friendlyPosition);
 
                     // If a friendly piece can block the attack path of the 1 threat, then 'NOT_CHECK'
-                    if (friendly != null) {
+                    if (friendly != null
+                            && friendly.getColor() == king.getColor()
+                            && !(friendly instanceof King)) {
                         for (Position blockingPosition : threatAttackPath) {
                             if (friendly.canMove(friendlyPosition, blockingPosition)) {
                                 return true;

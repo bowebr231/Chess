@@ -67,14 +67,27 @@ public class Controller implements Initializable {
                         }
 
                         // Try to move a piece
-                        Position start = ChessBoard.findPiecePosition(prevSelectedPiece.getPiece());
-                        Position end = getChessBoardViewPosition(boardSquare);
                         if (prevSelectedPiece != null) {
-                            if (prevSelectedPiece.getPiece().moveToPosition(start, end))
+                            Position start = ChessBoard.findPiecePosition(prevSelectedPiece.getPiece());
+                            Position end = getChessBoardViewPosition(boardSquare);
+                            PlayerStateMachine turnPlayerState = getPlayerStateMachineByTurn();
+
+                            if (prevSelectedPiece.getPiece().canMove(start, end)
+                                    && !turnPlayerState.isMoveCheck(prevSelectedPiece.getPiece(), end))
                             {
+                                prevSelectedPiece.getPiece().moveToPosition(start, end);
                                 moveChessBoardViewPosition(ChessBoard.findPiecePosition(prevSelectedPiece.getPiece()), prevSelectedPiece);
                                 changeTurnColor();
                                 updateView();
+
+                                turnPlayerState = getPlayerStateMachineByTurn();
+
+                                PlayerStateMachine.PlayerState state = turnPlayerState.getUpdatedState();
+                                if ( state == PlayerStateMachine.PlayerState.CHECK) {
+                                    System.out.println(turnColor + " player is in CHECK!");
+                                } else if (state == PlayerStateMachine.PlayerState.CHECKMATE) {
+                                    System.out.println(turnColor + "player is in CHECKMATE! Game Over");
+                                }
                             }
                             clearSelection(boardSquare);
                         } else {
@@ -91,6 +104,10 @@ public class Controller implements Initializable {
 
         // Set Chess Board Pieces
         setupChessModelAndView();
+    }
+
+    private PlayerStateMachine getPlayerStateMachineByTurn() {
+        return (turnColor == ChessPiece.PieceColor.WHITE) ? whiteStateMachine : blackStateMachine;
     }
 
     private void setSelectionEffect(StackPane boardSquare, boolean selectTarget) {

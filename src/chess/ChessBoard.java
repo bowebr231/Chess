@@ -1,6 +1,7 @@
 package chess;
 
 import chess.pieces.ChessPiece;
+import chess.pieces.Knight;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,8 +57,13 @@ public class ChessBoard {
      * @return
      */
     public static boolean isDiagonalMove(Position diff) {
-        return diff.getX() != 0 &&
-                Math.abs(diff.getY() / diff.getX()) == 1;
+        boolean result = false;
+        if (diff.getX() != 0
+            && diff.getY() % diff.getX() == 0 // Division will give an integer instead of a double
+            && Math.abs((diff.getY() / diff.getX())) == 1) {
+            result = true;
+        }
+        return result;
     }
 
     /**
@@ -86,6 +92,11 @@ public class ChessBoard {
      */
     public static boolean isPieceBlockingPath(Position start, Position end, ChessPiece.PieceColor friendly) {
         boolean result = false;
+
+        if (ChessBoard.getPiece(start) instanceof Knight) {
+            return result;
+        }
+
         List<ChessPiece> path = scanBoardLineForPieces(start, end);
 
 
