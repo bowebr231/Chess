@@ -70,6 +70,19 @@ public class PlayerStateMachine {
         }
     }
 
+    public boolean isMoveCheck(ChessPiece piece, Position newPosition) {
+        boolean result = false;
+
+        saveBoardCopy();
+
+        ChessBoard.putPieceHere(newPosition, piece);
+        result = isCheck();
+        
+        restoreBoardCopy();
+
+        return result;
+    }
+
     /*
     Problem To Solve:
 
@@ -86,13 +99,10 @@ public class PlayerStateMachine {
     by the many operations needed to calculate these states since check and checkmate are so closely bound, I think.
      */
     public PlayerState updateState() {
-        Position kingPos = ChessBoard.findPiecePosition(king);
 
-        List<Position> threatPositionList = getThreatPositions(kingPos);
-
-        if (threatPositionList.size() > 0) {
+        if (isCheck()) {
             state = PlayerState.CHECK;
-            if (!canEscape(kingPos, threatPositionList)) {
+            if (isCheckmate()) {
                 state = PlayerState.CHECKMATE;
             }
         } else {
@@ -100,6 +110,26 @@ public class PlayerStateMachine {
         }
 
         return state;
+    }
+
+    private boolean isCheck() {
+        Position kingPos = ChessBoard.findPiecePosition(king);
+        List<Position> threatPositionList = getThreatPositions(kingPos);
+
+        if (threatPositionList.size() > 0) {
+            return true;
+        } else
+            return false;
+    }
+
+    private boolean isCheckmate() {
+        Position kingPos = ChessBoard.findPiecePosition(king);
+        List<Position> threatPositionList = getThreatPositions(kingPos);
+
+        if (!canEscape(kingPos, threatPositionList)) {
+            return true;
+        } else
+            return false;
     }
 
     private List<Position> getThreatPositions(final Position kingPosition) {

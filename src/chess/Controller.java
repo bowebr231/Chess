@@ -25,6 +25,9 @@ public class Controller implements Initializable {
 
     private ChessPiece.PieceColor turnColor = ChessPiece.PieceColor.WHITE;
 
+    private PlayerStateMachine whiteStateMachine;
+    private PlayerStateMachine blackStateMachine;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -39,7 +42,7 @@ public class Controller implements Initializable {
 
         // Add user 'click' game interface
 
-        /* State Machine:
+        /* Event Handler:
         1. If square is clicked with a piece on it, and it's that color's turn then piece is 'selected'.
         2. If another square is clicked then check if move is valid. If valid then move the piece there.
             Deselect after this 2nd click regardless if valid or not.
@@ -64,10 +67,10 @@ public class Controller implements Initializable {
                         }
 
                         // Try to move a piece
+                        Position start = ChessBoard.findPiecePosition(prevSelectedPiece.getPiece());
+                        Position end = getChessBoardViewPosition(boardSquare);
                         if (prevSelectedPiece != null) {
-                            if (prevSelectedPiece.getPiece().moveToPosition(
-                                    ChessBoard.findPiecePosition(prevSelectedPiece.getPiece()),
-                                    getChessBoardViewPosition(boardSquare)))
+                            if (prevSelectedPiece.getPiece().moveToPosition(start, end))
                             {
                                 moveChessBoardViewPosition(ChessBoard.findPiecePosition(prevSelectedPiece.getPiece()), prevSelectedPiece);
                                 changeTurnColor();
@@ -110,11 +113,17 @@ public class Controller implements Initializable {
             setPieceViewPosition(new Position(6, x), new Pawn(ChessPiece.PieceColor.BLACK));
         }
 
+        // Init state machines for tracking Check/Checkmate
+        King whiteKing = new King(ChessPiece.PieceColor.WHITE);
+        King blackKing = new King(ChessPiece.PieceColor.BLACK);
+        whiteStateMachine = new PlayerStateMachine(whiteKing);
+        blackStateMachine = new PlayerStateMachine(blackKing);
+
         // Other White Pieces
         setPieceViewPosition(new Position(0, 0), new Rook(ChessPiece.PieceColor.WHITE));
         setPieceViewPosition(new Position(0, 1), new Knight(ChessPiece.PieceColor.WHITE));
         setPieceViewPosition(new Position(0, 2), new Bishop(ChessPiece.PieceColor.WHITE));
-        setPieceViewPosition(new Position(0, 3), new King(ChessPiece.PieceColor.WHITE));
+        setPieceViewPosition(new Position(0, 3), whiteKing);
         setPieceViewPosition(new Position(0, 4), new Queen(ChessPiece.PieceColor.WHITE));
         setPieceViewPosition(new Position(0, 5), new Bishop(ChessPiece.PieceColor.WHITE));
         setPieceViewPosition(new Position(0, 6), new Knight(ChessPiece.PieceColor.WHITE));
@@ -125,7 +134,7 @@ public class Controller implements Initializable {
         setPieceViewPosition(new Position(7, 1), new Knight(ChessPiece.PieceColor.BLACK));
         setPieceViewPosition(new Position(7, 2), new Bishop(ChessPiece.PieceColor.BLACK));
         setPieceViewPosition(new Position(7, 4), new Queen(ChessPiece.PieceColor.BLACK));
-        setPieceViewPosition(new Position(7, 3), new King(ChessPiece.PieceColor.BLACK));
+        setPieceViewPosition(new Position(7, 3), blackKing);
         setPieceViewPosition(new Position(7, 5), new Bishop(ChessPiece.PieceColor.BLACK));
         setPieceViewPosition(new Position(7, 6), new Knight(ChessPiece.PieceColor.BLACK));
         setPieceViewPosition(new Position(7, 7), new Rook(ChessPiece.PieceColor.BLACK));
