@@ -1,9 +1,8 @@
 package chess;
 
-import chess.ChessBoard;
-import chess.Position;
 import chess.pieces.ChessPiece;
 import chess.pieces.King;
+import chess.pieces.Knight;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,7 +12,6 @@ import java.util.List;
 public class PlayerStateMachine {
 
     private PlayerState state = PlayerState.NOT_CHECK;
-    private final ChessPiece.PieceColor stateMachineColor;
     private final King king;
 
     /**
@@ -46,7 +44,6 @@ public class PlayerStateMachine {
 
     public PlayerStateMachine(King king) {
         this.king = king;
-        this.stateMachineColor = king.color;
     }
 
     enum PlayerState {
@@ -91,11 +88,11 @@ public class PlayerStateMachine {
     public PlayerState updateState() {
         Position kingPos = ChessBoard.findPiecePosition(king);
 
-        int numberOfThreats = numberOfThreats(kingPos);
+        List<Position> threatPositionList = getThreatPositions(kingPos);
 
-        if (numberOfThreats > 0) {
+        if (threatPositionList.size() > 0) {
             state = PlayerState.CHECK;
-            if (!canEscape(kingPos, numberOfThreats)) {
+            if (!canEscape(kingPos, threatPositionList)) {
                 state = PlayerState.CHECKMATE;
             }
         } else {
@@ -105,31 +102,29 @@ public class PlayerStateMachine {
         return state;
     }
 
-
-
-    private int getThreatVectors(Position kingPosition) {
-        int numberOfThreats = 0;
+    private List<Position> getThreatPositions(final Position kingPosition) {
+        List<Position> threatPositions = new ArrayList<>();
 
         // Scan all enemy pieces
         for (int y = 0; y < ChessBoard.getSizeY(); y++) {
             for (int x = 0; x < ChessBoard.getSizeX(); x++) {
 
                 Position enemyPosition = new Position(y, x);
-                ChessPiece piece = ChessBoard.getPiece(enemyPosition);
+                ChessPiece enemy = ChessBoard.getPiece(enemyPosition);
 
                 // If an enemy piece can reach the king, then 'check'
-                if (piece != null
-                        && piece.getColor() != stateMachineColor
-                        && piece.canMove(enemyPosition, kingPosition)) {
+                if (enemy != null
+                        && enemy.getColor() != king.getColor()
+                        && enemy.canMove(enemyPosition, kingPosition)) {
 
-                    numberOfThreats++;
+                    threatPositions.add(enemyPosition);
                 }
             }
         }
-        return numberOfThreats;
+        return threatPositions;
     }
 
-    private boolean canEscape(Position kingPosition, final int numberOfThreats) {
+    private boolean canEscape(final Position kingPosition, final List<Position> threatPositionList) {
         // Can King move?
 
         // Can all threats be killed in one move?
@@ -137,47 +132,86 @@ public class PlayerStateMachine {
         // Can friendly piece block all attack vectors?
 
         return canKingEscape(kingPosition)
-                || canThreatsBeDestroyed(kingPosition, numberOfThreats)
-                || canFriendBlockThreats(kingPosition);
+                || canThreatsBeDestroyed(kingPosition, threatPositionList)
+                || canFriendBlockThreats(kingPosition, threatPositionList);
 
     }
 
+    /**
+     * Test all moves the King can make to see if an escape exists.
+     *
+     * @param kingPosition
+     * @return
+     */
     private boolean canKingEscape(Position kingPosition) {
+        // Basic King moves
         for (Position diff : KING_MOVE_DIFFS) {
-            if (numberOfThreats(kingPosition.add(diff)) == 0) {
+            if (getThreatPositions(kingPosition.add(diff)).size() == 0) {
                 return true;
             }
         }
+
+        // TODO special king moves
+        // [insert code]
+
         return false;
     }
 
-    private boolean canThreatsBeDestroyed(Position kingPosition, final int numberOfThreats) {
-        boolean result = false;
+    // NOTE: canThreatsBeDestroyed() and canFriendBlockThreats() maybe could have overlaps.
+    // canThreatsBeDestroyed() maybe could block an enemy piece after killing an enemy?
+    // No, if you kill an enemy piece you just take the enemy's place. And knight's on the other
+    // hand would just jump their friendly pieces anyway.
+    // However, if the king kills a piece it maybe could survive, but this would be handled in the first condition:
+    // canKingEscape().
 
-        if (numberOfThreats < 2) {
+    private boolean canThreatsBeDestroyed(Position kingPosition, final List<Position> threatPositionList) {
+
+        // Assumes if more than one threat exists then nothing can be done. Could be a false assumption!!!
+        if (threatPositionList.size() < 2) {
             // Scan all friendly pieces
             for (int y = 0; y < ChessBoard.getSizeY(); y++) {
                 for (int x = 0; x < ChessBoard.getSizeX(); x++) {
 
                     Position friendlyPosition = new Position(y, x);
-                    ChessPiece piece = ChessBoard.getPiece(friendlyPosition);
+                    ChessPiece friendly = ChessBoard.getPiece(friendlyPosition);
 
-                    // If a friendly piece can destroy all threats, then 'not check'
-                    if (piece != null
-                            && piece.color != stateMachineColor
-                            && piece.canMove(friendlyPosition, kingPosition)) {
-
-                        result = true;
-                        return result;
+                    // If a friendly piece can destroy the 1 threat, then 'NOT_CHECK'
+                    if (friendly != null
+                            && friendly.getColor() == king.getColor()
+                            && friendly.canMove(friendlyPosition, threatPositionList.get(0))) {
+                        return true;
                     }
                 }
             }
         }
-        return result;
+        return false;
     }
 
-    private boolean canFriendBlockThreats(Position kingPosition) {
+    private boolean canFriendBlockThreats(Position kingPosition, final List<Position> threatPositionList) {
+        ChessPiece enemy = ChessBoard.getPiece(threatPositionList.get(0));
+        // Assumes if more than one threat exists then nothing can be done. Could be a false assumption!!!
+        if (threatPositionList.size() < 2 && !(enemy instanceof Knight)) {
 
+            List<Position> threatAttackPath = ChessBoard.getBoardLinePositions(threatPositionList.get(0), kingPosition);
+            // Scan all friendly pieces
+            for (int y = 0; y < ChessBoard.getSizeY(); y++) {
+                for (int x = 0; x < ChessBoard.getSizeX(); x++) {
+
+                    Position friendlyPosition = new Position(y, x);
+                    ChessPiece friendly = ChessBoard.getPiece(friendlyPosition);
+
+                    // If a friendly piece can block the attack path of the 1 threat, then 'NOT_CHECK'
+                    if (friendly != null) {
+                        for (Position blockingPosition : threatAttackPath) {
+                            if (friendly.canMove(friendlyPosition, blockingPosition)) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     // A challenge is destroying and blocking could happen in one move.

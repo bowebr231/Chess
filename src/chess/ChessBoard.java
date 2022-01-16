@@ -86,7 +86,7 @@ public class ChessBoard {
      */
     public static boolean isPieceBlockingPath(Position start, Position end, ChessPiece.PieceColor friendly) {
         boolean result = false;
-        List<ChessPiece> path = getLine(start, end);
+        List<ChessPiece> path = scanBoardLineForPieces(start, end);
 
 
         final int destination = path.size() - 1;
@@ -105,9 +105,19 @@ public class ChessBoard {
         return result;
     }
 
-    public static List<ChessPiece> getLine(Position start, Position end) {
+    public static List<ChessPiece> scanBoardLineForPieces(Position start, Position end) {
+
+        List<Position> line = getBoardLinePositions(start, end);
+        List<ChessPiece> scanLine = new ArrayList<>();
+        for (Position position : line) {
+            scanLine.add(ChessBoard.getPiece(position));
+        }
+        return scanLine;
+    }
+
+    public static List<Position> getBoardLinePositions(Position start, Position end) {
         Position diff = start.getDifference(end);
-        List<ChessPiece> line = new ArrayList();
+        List<Position> line = new ArrayList();
         Position incrementInDirection = Position.getDiffDirection(diff);
         int distance;
 
@@ -123,7 +133,7 @@ public class ChessBoard {
         Position temp = new Position(start);
         for (int i = 1; i <= distance; i++) {
             temp = temp.add(incrementInDirection);
-            line.add(ChessBoard.getPiece(temp));
+            line.add(temp);
         }
         return line;
     }

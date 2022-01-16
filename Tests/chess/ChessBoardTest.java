@@ -142,7 +142,7 @@ class ChessBoardTest {
             assertTrue(ChessBoard.putPieceHere(rookPos, expectedLine.get(0)));
             assertTrue(ChessBoard.putPieceHere(queenPos, expectedLine.get(2)));
 
-            List<ChessPiece> actualLine = ChessBoard.getLine(start, end);
+            List<ChessPiece> actualLine = ChessBoard.scanBoardLineForPieces(start, end);
             System.out.println("Expected length="+expectedLine.size());
             System.out.println("Actual length="+actualLine.size());
 
@@ -176,7 +176,7 @@ class ChessBoardTest {
             assertTrue(ChessBoard.putPieceHere(rookPos, rook));
             assertTrue(ChessBoard.putPieceHere(queenPos, queen));
 
-            List<ChessPiece> actualLine = ChessBoard.getLine(start, end);
+            List<ChessPiece> actualLine = ChessBoard.scanBoardLineForPieces(start, end);
             System.out.println("Expected length="+expectedLine.size());
             System.out.println("Actual length="+actualLine.size());
 
@@ -210,7 +210,7 @@ class ChessBoardTest {
             assertTrue(ChessBoard.putPieceHere(rookPos, rook));
             assertTrue(ChessBoard.putPieceHere(queenPos, queen));
 
-            List<ChessPiece> actualLine = ChessBoard.getLine(start, end);
+            List<ChessPiece> actualLine = ChessBoard.scanBoardLineForPieces(start, end);
             System.out.println("Expected length="+expectedLine.size());
             System.out.println("Actual length="+actualLine.size());
 
@@ -245,7 +245,7 @@ class ChessBoardTest {
             assertTrue(ChessBoard.putPieceHere(rookPos, rook));
             assertTrue(ChessBoard.putPieceHere(queenPos, queen));
 
-            List<ChessPiece> actualLine = ChessBoard.getLine(start, end);
+            List<ChessPiece> actualLine = ChessBoard.scanBoardLineForPieces(start, end);
             System.out.println("Expected length="+expectedLine.size());
             System.out.println("Actual length="+actualLine.size());
 
@@ -280,7 +280,7 @@ class ChessBoardTest {
             assertTrue(ChessBoard.putPieceHere(rookPos, rook));
             assertTrue(ChessBoard.putPieceHere(queenPos, queen));
 
-            List<ChessPiece> actualLine = ChessBoard.getLine(start, end);
+            List<ChessPiece> actualLine = ChessBoard.scanBoardLineForPieces(start, end);
             System.out.println("Expected length="+expectedLine.size());
             System.out.println("Actual length="+actualLine.size());
 
