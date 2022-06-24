@@ -8,6 +8,8 @@ import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -70,19 +72,19 @@ public class Controller implements Initializable {
                         if (prevSelectedPiece != null) {
                             Position start = ChessBoard.findPiecePosition(prevSelectedPiece.getPiece());
                             Position end = getChessBoardViewPosition(boardSquare);
-                            PlayerStateMachine turnPlayerState = getPlayerStateMachineByTurn();
+                            PlayerStateMachine playerState = getPlayerStateMachineByTurn();
 
                             if (prevSelectedPiece.getPiece().canMove(start, end)
-                                    && !turnPlayerState.isMoveCheck(prevSelectedPiece.getPiece(), end))
+                                    && !playerState.isMoveCheck(prevSelectedPiece.getPiece(), end))
                             {
                                 prevSelectedPiece.getPiece().moveToPosition(start, end);
                                 moveChessBoardViewPosition(ChessBoard.findPiecePosition(prevSelectedPiece.getPiece()), prevSelectedPiece);
                                 changeTurnColor();
                                 updateView();
 
-                                turnPlayerState = getPlayerStateMachineByTurn();
+                                playerState = getPlayerStateMachineByTurn();
 
-                                PlayerStateMachine.PlayerState state = turnPlayerState.getUpdatedState();
+                                PlayerStateMachine.PlayerState state = playerState.getUpdatedState();
                                 if ( state == PlayerStateMachine.PlayerState.CHECK) {
                                     System.out.println(turnColor + " player is in CHECK!");
                                 } else if (state == PlayerStateMachine.PlayerState.CHECKMATE) {
