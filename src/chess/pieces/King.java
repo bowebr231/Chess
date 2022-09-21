@@ -37,7 +37,8 @@ public class King extends ChessPiece {
      */
     private boolean isValidMove(Position diff) {
         boolean isValid = false;
-        if (Math.abs(diff.getY()) == 1 || Math.abs(diff.getX()) == 1) {
+        if (Math.abs(diff.getY()) <= 1 && Math.abs(diff.getX()) <= 1
+            && Math.abs(diff.getY()) + Math.abs(diff.getX()) != 0) {
             isValid = true;
         }
         return isValid;

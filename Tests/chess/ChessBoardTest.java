@@ -1,9 +1,6 @@
 package chess;
 
-import chess.pieces.Bishop;
-import chess.pieces.ChessPiece;
-import chess.pieces.Queen;
-import chess.pieces.Rook;
+import chess.pieces.*;
 import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
@@ -142,7 +139,7 @@ class ChessBoardTest {
             assertTrue(ChessBoard.putPieceHere(rookPos, expectedLine.get(0)));
             assertTrue(ChessBoard.putPieceHere(queenPos, expectedLine.get(2)));
 
-            List<ChessPiece> actualLine = ChessBoard.getLine(start, end);
+            List<ChessPiece> actualLine = ChessBoard.scanBoardLineForPieces(start, end);
             System.out.println("Expected length="+expectedLine.size());
             System.out.println("Actual length="+actualLine.size());
 
@@ -176,7 +173,7 @@ class ChessBoardTest {
             assertTrue(ChessBoard.putPieceHere(rookPos, rook));
             assertTrue(ChessBoard.putPieceHere(queenPos, queen));
 
-            List<ChessPiece> actualLine = ChessBoard.getLine(start, end);
+            List<ChessPiece> actualLine = ChessBoard.scanBoardLineForPieces(start, end);
             System.out.println("Expected length="+expectedLine.size());
             System.out.println("Actual length="+actualLine.size());
 
@@ -210,7 +207,7 @@ class ChessBoardTest {
             assertTrue(ChessBoard.putPieceHere(rookPos, rook));
             assertTrue(ChessBoard.putPieceHere(queenPos, queen));
 
-            List<ChessPiece> actualLine = ChessBoard.getLine(start, end);
+            List<ChessPiece> actualLine = ChessBoard.scanBoardLineForPieces(start, end);
             System.out.println("Expected length="+expectedLine.size());
             System.out.println("Actual length="+actualLine.size());
 
@@ -245,7 +242,7 @@ class ChessBoardTest {
             assertTrue(ChessBoard.putPieceHere(rookPos, rook));
             assertTrue(ChessBoard.putPieceHere(queenPos, queen));
 
-            List<ChessPiece> actualLine = ChessBoard.getLine(start, end);
+            List<ChessPiece> actualLine = ChessBoard.scanBoardLineForPieces(start, end);
             System.out.println("Expected length="+expectedLine.size());
             System.out.println("Actual length="+actualLine.size());
 
@@ -280,7 +277,7 @@ class ChessBoardTest {
             assertTrue(ChessBoard.putPieceHere(rookPos, rook));
             assertTrue(ChessBoard.putPieceHere(queenPos, queen));
 
-            List<ChessPiece> actualLine = ChessBoard.getLine(start, end);
+            List<ChessPiece> actualLine = ChessBoard.scanBoardLineForPieces(start, end);
             System.out.println("Expected length="+expectedLine.size());
             System.out.println("Actual length="+actualLine.size());
 
@@ -315,13 +312,31 @@ class ChessBoardTest {
 
         Position pos = new Position(7, 7);
         assertTrue(ChessBoard.putPieceHere(pos, rook));
-        assertFalse(ChessBoard.putPieceHere(pos, bishop));
+        // assertFalse(ChessBoard.putPieceHere(pos, bishop));
         assertSame(ChessBoard.getPiece(pos), rook);
 
         Position newPos = new Position(5, 5);
         assertTrue(ChessBoard.putPieceHere(newPos, rook));
         assertNull(ChessBoard.getPiece(pos));
         assertSame(ChessBoard.getPiece(newPos), rook);
+    }
+
+    @Test
+    void isCheckmate() {
+        King kingTarget = new King(ChessPiece.PieceColor.WHITE);
+
+        Queen queen = new Queen(ChessPiece.PieceColor.BLACK);
+        Queen queen2 = new Queen(ChessPiece.PieceColor.BLACK);
+
+        ChessBoard.putPieceHere(new Position(7, 0), kingTarget);
+        ChessBoard.putPieceHere(new Position(6, 7), queen);
+        ChessBoard.putPieceHere(new Position(7, 7), queen2);
+
+        PlayerStateMachine whiteState = new PlayerStateMachine(kingTarget);
+
+        // White's move
+        assertEquals(PlayerStateMachine.PlayerState.CHECKMATE, whiteState.getUpdatedState());
+
     }
 
     @Test
