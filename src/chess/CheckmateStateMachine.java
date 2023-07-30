@@ -9,9 +9,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class PlayerStateMachine {
+public class CheckmateStateMachine {
 
-    private PlayerState state = PlayerState.NOT_CHECK;
+    private State state = State.NOT_CHECK;
     private final King king;
 
     /**
@@ -42,11 +42,11 @@ public class PlayerStateMachine {
             DOWN_RIGHT,
             DOWN_LEFT));
 
-    public PlayerStateMachine(King king) {
+    public CheckmateStateMachine(King king) {
         this.king = king;
     }
 
-    enum PlayerState {
+    enum State {
         NOT_CHECK,
         CHECK,
         CHECKMATE
@@ -80,7 +80,7 @@ public class PlayerStateMachine {
         
         restoreBoardCopy();
 
-        if (result == false && state == PlayerState.CHECK) {
+        if (result == false && state == State.CHECK) {
             System.out.println(piece.getColor() + " player escaped CHECK!");
         }
 
@@ -102,15 +102,15 @@ public class PlayerStateMachine {
     isCheck(), and isCheckMate(). But, then I started to redesign the method names
     by the many operations needed to calculate these states since check and checkmate are so closely bound, I think.
      */
-    public PlayerState getUpdatedState() {
+    public State getUpdatedState() {
 
         if (isCheck()) {
-            state = PlayerState.CHECK;
+            state = State.CHECK;
             if (isCheckmate()) {
-                state = PlayerState.CHECKMATE;
+                state = State.CHECKMATE;
             }
         } else {
-            state = PlayerState.NOT_CHECK;
+            state = State.NOT_CHECK;
         }
 
         return state;

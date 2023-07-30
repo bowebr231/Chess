@@ -1,17 +1,17 @@
 package chess.pieces;
 
 import chess.ChessBoard;
-import chess.Main;
+import chess.Chess;
 import chess.Position;
 
 public class Rook extends ChessPiece {
 
-    public Rook(PieceColor color) {
+    public Rook(Color color) {
         super(color);
-        if (color == PieceColor.WHITE) {
-            super.chessPieceView.setImage(Main.WHITE_ROOK_IMAGE);
+        if (color == Color.WHITE) {
+            super.chessPieceView.setImage(Chess.WHITE_ROOK_IMAGE);
         } else {
-            super.chessPieceView.setImage(Main.BLACK_ROOK_IMAGE);
+            super.chessPieceView.setImage(Chess.BLACK_ROOK_IMAGE);
         }
         super.chessPieceView.setPiece(this);
     }

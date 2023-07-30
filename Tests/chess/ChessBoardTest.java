@@ -79,9 +79,9 @@ class ChessBoardTest {
 
         @Test
         void isPieceBlockingPathFriendly() {
-            Rook rook = new Rook(ChessPiece.PieceColor.BLACK);
+            Rook rook = new Rook(ChessPiece.Color.BLACK);
             ChessBoard.putPieceHere(new Position(0, 0), rook);
-            ChessBoard.putPieceHere(new Position(3, 0), new Rook(ChessPiece.PieceColor.BLACK));
+            ChessBoard.putPieceHere(new Position(3, 0), new Rook(ChessPiece.Color.BLACK));
 
             Assertions.assertFalse(rook.canMove(new Position(0,0), new Position(7, 0)));
 
@@ -90,27 +90,27 @@ class ChessBoardTest {
 
         @Test
         void isPieceBlockingPathEnemy() {
-            Rook rook = new Rook(ChessPiece.PieceColor.BLACK);
+            Rook rook = new Rook(ChessPiece.Color.BLACK);
             ChessBoard.putPieceHere(new Position(0, 0), rook);
-            ChessBoard.putPieceHere(new Position(3, 0), new Rook(ChessPiece.PieceColor.WHITE));
+            ChessBoard.putPieceHere(new Position(3, 0), new Rook(ChessPiece.Color.WHITE));
 
             Assertions.assertFalse(rook.canMove(new Position(0,0), new Position(7, 0)));
         }
 
         @Test
         void isPieceBlockingPathFriendlyTarget() {
-            Rook rook = new Rook(ChessPiece.PieceColor.BLACK);
+            Rook rook = new Rook(ChessPiece.Color.BLACK);
             ChessBoard.putPieceHere(new Position(0, 0), rook);
-            ChessBoard.putPieceHere(new Position(3, 0), new Rook(ChessPiece.PieceColor.BLACK));
+            ChessBoard.putPieceHere(new Position(3, 0), new Rook(ChessPiece.Color.BLACK));
 
             Assertions.assertFalse(rook.canMove(new Position(0,0), new Position(3, 0)));
         }
 
         @Test
         void isPieceBlockingPathEnemyTarget() {
-            Rook rook = new Rook(ChessPiece.PieceColor.BLACK);
+            Rook rook = new Rook(ChessPiece.Color.BLACK);
             ChessBoard.putPieceHere(new Position(0, 0), rook);
-            ChessBoard.putPieceHere(new Position(3, 0), new Rook(ChessPiece.PieceColor.WHITE));
+            ChessBoard.putPieceHere(new Position(3, 0), new Rook(ChessPiece.Color.WHITE));
 
             Assertions.assertTrue(rook.canMove(new Position(0,0), new Position(3, 0)));
         }
@@ -128,9 +128,9 @@ class ChessBoardTest {
             Position queenPos = new Position(3, 3);
 
             // Skips start position
-            expectedLine.add(new Rook(ChessPiece.PieceColor.WHITE));
+            expectedLine.add(new Rook(ChessPiece.Color.WHITE));
             expectedLine.add(null);
-            expectedLine.add(new Queen(ChessPiece.PieceColor.BLACK));
+            expectedLine.add(new Queen(ChessPiece.Color.BLACK));
             expectedLine.add(null);
             expectedLine.add(null);
             expectedLine.add(null);
@@ -156,8 +156,8 @@ class ChessBoardTest {
             Position start = new Position(7, 3);
             Position end = new Position(0, 3);
 
-            Queen queen = new Queen(ChessPiece.PieceColor.BLACK);
-            Rook rook = new Rook(ChessPiece.PieceColor.WHITE);
+            Queen queen = new Queen(ChessPiece.Color.BLACK);
+            Rook rook = new Rook(ChessPiece.Color.WHITE);
             Position rookPos = new Position(1, 3);
             Position queenPos = new Position(3, 3);
 
@@ -190,8 +190,8 @@ class ChessBoardTest {
             Position start = new Position(3, 7);
             Position end = new Position(3, 0);
 
-            Queen queen = new Queen(ChessPiece.PieceColor.BLACK);
-            Rook rook = new Rook(ChessPiece.PieceColor.WHITE);
+            Queen queen = new Queen(ChessPiece.Color.BLACK);
+            Rook rook = new Rook(ChessPiece.Color.WHITE);
             Position rookPos = new Position(3, 1);
             Position queenPos = new Position(3, 3);
 
@@ -224,8 +224,8 @@ class ChessBoardTest {
             Position start = new Position(0, 0);
             Position end = new Position(7, 7);
 
-            Queen queen = new Queen(ChessPiece.PieceColor.BLACK);
-            Rook rook = new Rook(ChessPiece.PieceColor.WHITE);
+            Queen queen = new Queen(ChessPiece.Color.BLACK);
+            Rook rook = new Rook(ChessPiece.Color.WHITE);
             Position rookPos = new Position(4, 4);
             Position queenPos = new Position(6, 6);
 
@@ -259,8 +259,8 @@ class ChessBoardTest {
             Position start = new Position(7, 7);
             Position end = new Position(0, 0);
 
-            Queen queen = new Queen(ChessPiece.PieceColor.BLACK);
-            Rook rook = new Rook(ChessPiece.PieceColor.WHITE);
+            Queen queen = new Queen(ChessPiece.Color.BLACK);
+            Rook rook = new Rook(ChessPiece.Color.WHITE);
             Position rookPos = new Position(4, 4);
             Position queenPos = new Position(6, 6);
 
@@ -291,7 +291,7 @@ class ChessBoardTest {
 
     @Test
     void getPiece() {
-        Rook piece = new Rook(ChessPiece.PieceColor.WHITE);
+        Rook piece = new Rook(ChessPiece.Color.WHITE);
         ChessBoard.putPieceHere(new Position(3, 3), piece);
 
         Assertions.assertEquals(piece, ChessBoard.getPiece(new Position(3, 3)));
@@ -307,8 +307,8 @@ class ChessBoardTest {
 
     @Test
     void putPieceHere() {
-        Rook rook = new Rook(ChessPiece.PieceColor.BLACK);
-        Bishop bishop = new Bishop(ChessPiece.PieceColor.BLACK);
+        Rook rook = new Rook(ChessPiece.Color.BLACK);
+        Bishop bishop = new Bishop(ChessPiece.Color.BLACK);
 
         Position pos = new Position(7, 7);
         assertTrue(ChessBoard.putPieceHere(pos, rook));
@@ -323,19 +323,19 @@ class ChessBoardTest {
 
     @Test
     void isCheckmate() {
-        King kingTarget = new King(ChessPiece.PieceColor.WHITE);
+        King kingTarget = new King(ChessPiece.Color.WHITE);
 
-        Queen queen = new Queen(ChessPiece.PieceColor.BLACK);
-        Queen queen2 = new Queen(ChessPiece.PieceColor.BLACK);
+        Queen queen = new Queen(ChessPiece.Color.BLACK);
+        Queen queen2 = new Queen(ChessPiece.Color.BLACK);
 
         ChessBoard.putPieceHere(new Position(7, 0), kingTarget);
         ChessBoard.putPieceHere(new Position(6, 7), queen);
         ChessBoard.putPieceHere(new Position(7, 7), queen2);
 
-        PlayerStateMachine whiteState = new PlayerStateMachine(kingTarget);
+        CheckmateStateMachine whiteState = new CheckmateStateMachine(kingTarget);
 
         // White's move
-        assertEquals(PlayerStateMachine.PlayerState.CHECKMATE, whiteState.getUpdatedState());
+        assertEquals(CheckmateStateMachine.State.CHECKMATE, whiteState.getUpdatedState());
 
     }
 

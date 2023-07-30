@@ -77,7 +77,7 @@ public class ChessBoard {
                 || diff.getX() != 0 && diff.getY() == 0; // Same column
     }
 
-    public static boolean isEnemyPiecePresent(Position pos, ChessPiece.PieceColor friendly) {
+    public static boolean isEnemyPiecePresent(Position pos, ChessPiece.Color friendly) {
         return getPiece(pos) != null
                 && getPiece(pos).getColor() != friendly;
     }
@@ -90,7 +90,7 @@ public class ChessBoard {
     3. Loop to get all number indices on path.
     4. For handling which directions (X or Y)... Abs and then something special for accessing the correct array index.
      */
-    public static boolean isPieceBlockingPath(Position start, Position end, ChessPiece.PieceColor friendly) {
+    public static boolean isPieceBlockingPath(Position start, Position end, ChessPiece.Color friendly) {
         boolean result = false;
 
         if (ChessBoard.getPiece(start) instanceof Knight) {

@@ -1,19 +1,19 @@
 package chess.pieces;
 
 import chess.ChessBoard;
-import chess.Main;
+import chess.Chess;
 import chess.Position;
 
 public class Pawn extends ChessPiece {
 
     private boolean directionIsUp;
     private boolean isFirstMove;
-    public Pawn(PieceColor color) {
+    public Pawn(Color color) {
         super(color);
-        if (color == PieceColor.WHITE) {
-            super.chessPieceView.setImage(Main.WHITE_PAWN_IMAGE);
+        if (color == Color.WHITE) {
+            super.chessPieceView.setImage(Chess.WHITE_PAWN_IMAGE);
         } else {
-            super.chessPieceView.setImage(Main.BLACK_PAWN_IMAGE);
+            super.chessPieceView.setImage(Chess.BLACK_PAWN_IMAGE);
         }
         super.chessPieceView.setPiece(this);
         isFirstMove = true;
